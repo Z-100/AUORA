@@ -1,0 +1,10 @@
+* Name
+    * AccountMapper.java
+
+* Responsibilities
+    * Map the entity to the DTO
+    * Map the DTO to the entity
+
+* Collaborators
+    * AccountDTO
+    * Account
