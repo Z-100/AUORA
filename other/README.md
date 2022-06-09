@@ -8,7 +8,7 @@ Listed in this directory are all the diagrams and planning for this project.
 * CRC Cards
   * [CRC Cards MD](https://github.com/Z-100/AUORA/tree/master/other/crc/cards)
   * [CRC Cards JSON](https://github.com/Z-100/AUORA/tree/master/other/crc/cards.json)
-  * [CRC Cards URL](INSERT LINK)
+    * To view the CRC cards as actual cards. Copy and Paste the code on [this website](https://echeung.me/crcmaker/)
 * Domain Model
   * [Domain model RAW](https://github.com/Z-100/AUORA/tree/master/other/domain/domain.drawio)
   * [Domain model PNG](https://github.com/Z-100/AUORA/tree/master/other/domain/domain.png)
