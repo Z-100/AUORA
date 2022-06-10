@@ -1,7 +1,8 @@
 package com.auora.api.components.account.dto;
 
-import com.auora.api.components.comment.entity.Comment;
-import com.auora.api.components.question.entity.Question;
+import com.auora.api.components.comment.dto.CommentDTO;
+import com.auora.api.components.question.dto.QuestionDTO;
+import com.auora.api.components.thread.dto.ThreadDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +16,9 @@ public class AccountDTO {
 
 	private String email;
 
-	private List<Question> recipes;
+	private List<QuestionDTO> recipes;
 
-	private List<Thread> threads;
+	private List<ThreadDTO> threads;
 
-	private List<Comment> comments;
+	private List<CommentDTO> comments;
 }

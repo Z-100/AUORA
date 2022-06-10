@@ -12,7 +12,9 @@ public class QuestionDTO {
 
 	private Long id;
 
-	private String email;
+	private String title;
+
+	private String description;
 
 	private List<CommentDTO> comments;
 }

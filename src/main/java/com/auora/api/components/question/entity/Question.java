@@ -22,14 +22,11 @@ public class Question {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "email")
-	private String email;
+	@Column(name = "title")
+	private String title;
 
-	@Column(name = "password")
-	private String password;
-
-	@Column(name = "token")
-	private String token;
+	@Column(name = "description")
+	private String description;
 
 	@ManyToOne
 	@JoinColumn(name = "fkAccountId")
