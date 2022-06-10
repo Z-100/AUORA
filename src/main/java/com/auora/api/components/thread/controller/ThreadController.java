@@ -87,13 +87,13 @@ public class ThreadController {
 				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
 	}
 
-	@PostMapping(Constants.URL_ADD + Constants.URL_DELETE)
+	@PostMapping(Constants.URL_DELETE)
 	public ResponseEntity<?> deleteThread(
 			@RequestHeader("email") String email,
 			@RequestHeader("password") String password,
-			@RequestHeader("question-id") String questionId) {
+			@RequestHeader("thread-id") String threadId) {
 
-		return threadService.addDownVote(email, password, questionId) ?
+		return threadService.addDownVote(email, password, threadId) ?
 				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
 				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
 	}
