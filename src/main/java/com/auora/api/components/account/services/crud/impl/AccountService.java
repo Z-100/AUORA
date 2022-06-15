@@ -50,21 +50,10 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 	}
 
 	@Override
-	public AccountDTO getAccount(String accountId) {
-		Validate.notNull(accountId);
+	public Account getAccount(String email) {
+		Validate.notNull(email);
 
-		Account accountFromDb;
-		try {
-			Long id = Long.valueOf(accountId);
-
-			Optional<Account> accountOptional = accountRepository.findById(id);
-			accountFromDb = accountOptional.orElse(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		return accountMapper.toDTO(accountFromDb);
+		return accountRepository.findByEmail(email);
 	}
 
 	@Override

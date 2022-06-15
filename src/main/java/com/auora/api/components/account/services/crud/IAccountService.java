@@ -1,12 +1,13 @@
 package com.auora.api.components.account.services.crud;
 
 import com.auora.api.components.account.dto.AccountDTO;
+import com.auora.api.components.account.entity.Account;
 
 import java.util.List;
 
 public interface IAccountService {
 
-	AccountDTO getAccount(String accountId);
+	Account getAccount(String accountId);
 
 	List<AccountDTO> getAllAccounts();
 
