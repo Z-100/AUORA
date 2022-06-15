@@ -16,8 +16,8 @@
     <artifactId>auora</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>demo</name>
-    <description>demo</description>
+    <name>AUORA</name>
+    <description>A forum</description>
 
     <properties>
         <mapstruct.version>1.5.1.Final</mapstruct.version>

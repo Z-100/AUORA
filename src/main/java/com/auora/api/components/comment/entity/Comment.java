@@ -29,6 +29,9 @@ public class Comment {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "votes")
+	private Long votes; //+/- possible
+
 	@ManyToOne
 	@JoinColumn(name = "fkAccountId")
 	@JsonManagedReference
@@ -43,4 +46,12 @@ public class Comment {
 	@JoinColumn(name = "fkThreadId")
 	@JsonManagedReference
 	private Thread fkThreadId;
+
+	public void addUpvote() {
+		votes++;
+	}
+
+	public void addDownVote() {
+		votes--;
+	}
 }

@@ -38,17 +38,6 @@ public class AccountController {
 				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
 	}
 
-	@GetMapping(Constants.URL_GET + "/{email}")
-	public ResponseEntity<?> getAccount(
-			@PathVariable("email") String email) {
-
-		AccountDTO accountDTO = accountService.getAccount(email);
-
-		return accountDTO == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(accountDTO, HttpStatus.OK);
-	}
-
 	@GetMapping(Constants.URL_GET + Constants.URL_ALL)
 	public ResponseEntity<?> getAllAccounts() {
 

@@ -18,17 +18,6 @@ public class ThreadController {
 
 	private final IThreadService threadService;
 
-	@GetMapping(Constants.URL_GET + "/{thread-id}")
-	public ResponseEntity<?> getSpecificThread(
-			@PathVariable("thread-id") String threadId) {
-
-		ThreadDTO threadDTO = threadService.getThread(threadId);
-
-		return threadDTO == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(threadDTO, HttpStatus.OK);
-	}
-
 	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/{email}")
 	public ResponseEntity<?> getAllThreadsFromAccount(
 			@PathVariable("email") String email) {

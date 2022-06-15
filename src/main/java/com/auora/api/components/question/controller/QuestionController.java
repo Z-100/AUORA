@@ -18,17 +18,6 @@ public class QuestionController {
 
 	private final IQuestionService questionService;
 
-	@GetMapping(Constants.URL_GET + "/{question-id}")
-	public ResponseEntity<?> getSpecificThread(
-			@PathVariable("question-id") String questionId) {
-
-		QuestionDTO questionDTO = questionService.getQuestion(questionId);
-
-		return questionDTO == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(questionDTO, HttpStatus.OK);
-	}
-
 	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/{email}")
 	public ResponseEntity<?> getAllQuestionsFromAccount(
 			@PathVariable("email") String email) {
