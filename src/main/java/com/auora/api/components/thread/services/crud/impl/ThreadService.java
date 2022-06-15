@@ -1,6 +1,7 @@
 package com.auora.api.components.thread.services.crud.impl;
 
 import com.auora.api.components.thread.dto.ThreadDTO;
+import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.components.thread.services.crud.IThreadService;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ public class ThreadService implements IThreadService {
 	private IPasswordValidationService pwValidation;
 
 	@Override
-	public ThreadDTO getThread(String threadId) {
+	public Thread getThread(String threadId) {
 		return null;
 	}
 

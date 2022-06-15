@@ -7,6 +7,8 @@ import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.components.comment.repository.ICommentRepository;
 import com.auora.api.components.comment.services.crud.ICommentService;
 import com.auora.api.components.comment.services.mapper.ACommentMapper;
+import com.auora.api.components.question.services.crud.impl.QuestionService;
+import com.auora.api.components.thread.services.crud.impl.ThreadService;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
@@ -26,7 +28,10 @@ public class CommentService implements ICommentService {
 
 	private ACommentMapper commentMapper;
 	private IPasswordValidationService passwordValidation;
+
 	private AccountService accountService;
+	private QuestionService questionService;
+	private ThreadService threadService;
 
 	@Override
 	public List<CommentDTO> getAllFromAccount(String email) {
@@ -88,13 +93,37 @@ public class CommentService implements ICommentService {
 		if (passwordValidation.validate(email, password) == null)
 			return false;
 
-		Validate.notNull(email);
+		Validate.notNull(commentId);
 
 		Long id = Long.parseLong(commentId);
 
 		commentRepository.delete(commentRepository.findById(id).orElseThrow());
 
 		return commentRepository.findById(id).isEmpty();
+	}
+
+	@Override
+	public Boolean addComment(String email, String title, String description, String fkQuestionId, String fkThreadId) {
+		Validate.notNull(title);
+		Validate.notNull(description);
+		Validate.notNull(email);
+
+		Comment comment = new Comment();
+		comment.setTitle(title);
+		comment.setDescription(description);
+		comment.setFkAccountId(accountService.getAccount(email));
+
+		if (fkQuestionId != null) {
+			comment.setFkQuestionId(questionService.getQuestion(fkQuestionId));
+		} else if (fkThreadId != null) {
+			comment.setFkThreadId(threadService.getThread(fkThreadId));
+		} else {
+			throw new IllegalArgumentException("Comment has to belong to a question/thread");
+		}
+
+		commentRepository.save(comment);
+
+		return Boolean.TRUE.equals(true);
 	}
 
 	private Comment getComment(String email, String password, String commentId) {
