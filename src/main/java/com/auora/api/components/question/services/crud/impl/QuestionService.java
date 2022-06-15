@@ -104,7 +104,6 @@ public class QuestionService implements IQuestionService {
 
 	@Override
 	public Boolean delete(String email, String password, String questionId) {
-
 		if (passwordValidation.validate(email, password) == null)
 			return false;
 

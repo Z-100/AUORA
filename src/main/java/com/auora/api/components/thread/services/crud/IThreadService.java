@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IThreadService {
 
-	Thread getThread(String threadId);
-	
 	List<ThreadDTO> getAllFromAccount(String accountId);
 
 	Boolean addThread(String email, String password, String title, String description);

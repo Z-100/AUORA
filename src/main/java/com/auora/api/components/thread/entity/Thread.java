@@ -28,6 +28,9 @@ public class Thread {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "votes")
+	private Long votes;
+
 	@ManyToOne
 	@JoinColumn(name = "fkAccountId")
 	@JsonManagedReference
@@ -38,4 +41,12 @@ public class Thread {
 			mappedBy = "fkThreadId")
 	@JsonBackReference
 	private List<Comment> comments;
+
+	public void addUpvote() {
+		votes++;
+	}
+
+	public void addDownVote() {
+		votes--;
+	}
 }
