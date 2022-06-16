@@ -16,5 +16,7 @@ public class ThreadDTO {
 
 	private String description;
 
+	private Long votes;
+
 	private List<CommentDTO> comments;
 }
