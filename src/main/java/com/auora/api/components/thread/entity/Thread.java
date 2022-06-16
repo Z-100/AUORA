@@ -31,16 +31,17 @@ public class Thread {
 	@Column(name = "votes")
 	private Long votes;
 
-	@ManyToOne
-	@JoinColumn(name = "fkAccountId")
-	@JsonManagedReference
-	private Account fkAccountId;
-
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,
 			mappedBy = "fkThreadId")
 	@JsonBackReference
 	private List<Comment> comments;
+
+	@ManyToOne
+	@JoinColumn(name = "fkAccountId")
+	@JsonManagedReference
+	private Account fkAccountId;
+
 
 	public void addUpvote() {
 		votes++;

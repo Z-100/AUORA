@@ -14,4 +14,6 @@ public class CommentDTO {
 	private String title;
 
 	private String description;
+
+	private Long votes;
 }
