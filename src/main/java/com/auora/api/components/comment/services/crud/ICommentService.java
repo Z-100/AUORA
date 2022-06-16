@@ -18,5 +18,5 @@ public interface ICommentService {
 
 	Boolean delete(String email, String password, String commentId);
 
-	Boolean addComment(String title, String description, String email, String fkQuestionId, String fkThreadId);
+	Boolean addComment(String email, String password, String title, String description, String fkQuestionId, String fkThreadId);
 }

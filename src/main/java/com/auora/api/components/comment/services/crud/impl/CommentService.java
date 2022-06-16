@@ -103,7 +103,7 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	public Boolean addComment(String email, String title, String description, String fkQuestionId, String fkThreadId) {
+	public Boolean addComment(String email, String password, String title, String description, String fkQuestionId, String fkThreadId) {
 		Validate.notNull(title);
 		Validate.notNull(description);
 		Validate.notNull(email);
@@ -114,9 +114,9 @@ public class CommentService implements ICommentService {
 		comment.setFkAccountId(accountService.getAccount(email));
 
 		if (fkQuestionId != null) {
-			comment.setFkQuestionId(questionService.getQuestion(fkQuestionId));
+			comment.setFkQuestionId(questionService.getQuestion(email, password, fkQuestionId));
 		} else if (fkThreadId != null) {
-			comment.setFkThreadId(threadService.getThread(fkThreadId));
+			comment.setFkThreadId(threadService.getThread(email, password, fkThreadId));
 		} else {
 			throw new IllegalArgumentException("Comment has to belong to a question/thread");
 		}

@@ -97,7 +97,7 @@ public class ThreadService implements IThreadService {
 		Validate.notNull(password);
 
 		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, description, questionId, null) : false;
+				commentService.addComment(email, password, title, description, questionId, null) : false;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class ThreadService implements IThreadService {
 		return threadRepository.findById(id).isEmpty();
 	}
 
-	private Thread getThread(String email, String password, String threadId) {
+	public Thread getThread(String email, String password, String threadId) {
 		if (passwordValidation.validate(email, password) == null)
 			return null;
 

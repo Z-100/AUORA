@@ -99,7 +99,7 @@ public class QuestionService implements IQuestionService {
 		Validate.notNull(password);
 
 		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, description, questionId, null) : false;
+				commentService.addComment(email, password, title, description, questionId, null) : false;
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class QuestionService implements IQuestionService {
 		return questionRepository.findById(id).isEmpty();
 	}
 
-	private Question getQuestion(String email, String password, String questionId) {
+	public Question getQuestion(String email, String password, String questionId) {
 		if (passwordValidation.validate(email, password) == null)
 			return null;
 
