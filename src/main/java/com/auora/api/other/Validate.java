@@ -153,7 +153,7 @@ public class Validate<T> {
 			for (String s : messages)
 				sb.append(s).append(" ");
 
-			throw new IllegalArgumentException(sb.toString());
+			throw new NullPointerException(sb.toString());
 		}
 
 		if (t.isEmpty()) {
