@@ -11,4 +11,6 @@ import java.util.List;
 public interface IQuestionRepository extends CrudRepository<Question, Long> {
 
 	List<Question> findAllByfkAccountId(Account fkAccountId);
+
+	void deleteById(Long id);
 }

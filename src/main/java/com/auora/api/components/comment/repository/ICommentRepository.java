@@ -17,4 +17,6 @@ public interface ICommentRepository extends CrudRepository<Comment, Long> {
 	List<Comment> findAllByFkQuestionId(Question fkQuestionId);
 
 	List<Comment> findAllByFkThreadId(Thread fkThreadId);
+
+	void deleteById(Long id);
 }
