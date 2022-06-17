@@ -1,0 +1,24 @@
+## MariaDB instance bound to port 3307 on the host. Data is persisted.
+## PhpMyAdmin instance bound to port 8000. Use root as user and password.
+
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8000:80
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  db:

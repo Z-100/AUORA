@@ -1,6 +1,8 @@
 package com.auora.api.components.comment.services.crud;
 
 import com.auora.api.components.comment.dto.CommentDTO;
+import com.auora.api.components.question.entity.Question;
+import com.auora.api.components.thread.entity.Thread;
 
 import java.util.List;
 
@@ -18,5 +20,5 @@ public interface ICommentService {
 
 	Boolean delete(String email, String password, String commentId);
 
-	Boolean addComment(String title, String description, String email, String fkQuestionId, String fkThreadId);
+	Boolean addComment(String email, String password, String title, String description, Question fkQuestionId, Thread fkThreadId);
 }

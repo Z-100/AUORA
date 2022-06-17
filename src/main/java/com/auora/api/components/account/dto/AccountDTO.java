@@ -16,7 +16,7 @@ public class AccountDTO {
 
 	private String email;
 
-	private List<QuestionDTO> recipes;
+	private List<QuestionDTO> questions;
 
 	private List<ThreadDTO> threads;
 

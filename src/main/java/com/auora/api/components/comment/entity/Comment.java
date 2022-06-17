@@ -4,18 +4,16 @@ import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.other.Constants;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = Constants.DB_ACCOUNT)
+@Table(name = Constants.DB_COMMENT)
 public class Comment {
 
 	@Id

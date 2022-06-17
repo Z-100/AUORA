@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = Constants.DB_ACCOUNT)
+@Table(name = Constants.DB_THREAD)
 public class Thread {
 
 	@Id
@@ -41,7 +41,6 @@ public class Thread {
 	@JoinColumn(name = "fkAccountId")
 	@JsonManagedReference
 	private Account fkAccountId;
-
 
 	public void addUpvote() {
 		votes++;

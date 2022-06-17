@@ -7,7 +7,9 @@ import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.components.comment.repository.ICommentRepository;
 import com.auora.api.components.comment.services.crud.ICommentService;
 import com.auora.api.components.comment.services.mapper.ACommentMapper;
+import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.question.services.crud.impl.QuestionService;
+import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.components.thread.services.crud.impl.ThreadService;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
@@ -20,8 +22,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
 public class CommentService implements ICommentService {
 
 	private ICommentRepository commentRepository;
@@ -30,8 +32,6 @@ public class CommentService implements ICommentService {
 	private IPasswordValidationService passwordValidation;
 
 	private AccountService accountService;
-	private QuestionService questionService;
-	private ThreadService threadService;
 
 	@Override
 	public List<CommentDTO> getAllFromAccount(String email) {
@@ -103,7 +103,7 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	public Boolean addComment(String email, String title, String description, String fkQuestionId, String fkThreadId) {
+	public Boolean addComment(String email, String password, String title, String description, Question fkQuestionId, Thread fkThreadId) {
 		Validate.notNull(title);
 		Validate.notNull(description);
 		Validate.notNull(email);
@@ -114,9 +114,9 @@ public class CommentService implements ICommentService {
 		comment.setFkAccountId(accountService.getAccount(email));
 
 		if (fkQuestionId != null) {
-			comment.setFkQuestionId(questionService.getQuestion(fkQuestionId));
+			comment.setFkQuestionId(fkQuestionId);
 		} else if (fkThreadId != null) {
-			comment.setFkThreadId(threadService.getThread(fkThreadId));
+			comment.setFkThreadId(fkThreadId);
 		} else {
 			throw new IllegalArgumentException("Comment has to belong to a question/thread");
 		}

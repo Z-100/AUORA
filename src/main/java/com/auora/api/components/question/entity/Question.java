@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = Constants.DB_ACCOUNT)
+@Table(name = Constants.DB_QUESTION)
 public class Question {
 
 	@Id
@@ -33,7 +33,7 @@ public class Question {
 
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,
-			mappedBy = "fkThreadId")
+			mappedBy = "fkQuestionId")
 	@JsonBackReference
 	private List<Comment> comments;
 
