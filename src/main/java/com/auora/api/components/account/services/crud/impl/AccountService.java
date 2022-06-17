@@ -7,6 +7,7 @@ import com.auora.api.components.account.services.crud.IAccountService;
 import com.auora.api.components.account.services.crud.ILoginService;
 import com.auora.api.components.account.services.crud.IRegisterService;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
+import com.auora.api.other.Constants;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
@@ -34,8 +35,8 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Boolean register(String email, String password) {
-		Validate.notNull(email);
-		Validate.notNull(password);
+		Validate.notNull(email, Constants.EMAIL_NOT_NULL);
+		Validate.notNull(password, Constants.PASSWORD_NOT_NULL);
 
 		Account account = new Account();
 		account.setEmail(email);

@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
 public class QuestionService implements IQuestionService {
 
 	private IQuestionRepository questionRepository;
@@ -94,12 +94,14 @@ public class QuestionService implements IQuestionService {
 	}
 
 	@Override
-	public Boolean addComment(String email, String password, String title, String description, String questionId) {
+	public Boolean addComment(String email, String password, String title, String description, String fkQuestionId) {
 		Validate.notNull(email);
 		Validate.notNull(password);
 
+		Question commentToQuestion = getQuestion(email, password, fkQuestionId);
+
 		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, title, description, questionId, null) : false;
+				commentService.addComment(email, password, title, description, commentToQuestion, null) : false;
 	}
 
 	@Override
@@ -127,3 +129,4 @@ public class QuestionService implements IQuestionService {
 		return questionRepository.findById(id).orElse(null);
 	}
 }
+

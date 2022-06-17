@@ -12,11 +12,13 @@ import com.auora.api.components.thread.services.mapper.AThreadMapper;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Component
 @AllArgsConstructor
 public class ThreadService implements IThreadService {
 
@@ -92,12 +94,14 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Boolean addComment(String email, String password, String questionId, String title, String description) {
+	public Boolean addComment(String email, String password, String fkThreadId, String title, String description) {
 		Validate.notNull(email);
 		Validate.notNull(password);
 
+		Thread commentToThread = getThread(email, password, fkThreadId);
+
 		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, title, description, questionId, null) : false;
+				commentService.addComment(email, password, title, description, null, commentToThread) : false;
 	}
 
 	@Override
