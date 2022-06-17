@@ -13,30 +13,37 @@ import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Component
 @AllArgsConstructor
 public class AccountService implements IAccountService, IRegisterService, ILoginService {
 
-	private IAccountRepository accountRepository;
+	private final IAccountRepository accountRepository;
 
-	private IPasswordValidationService passwordValidationService;
-	private AAccountMapper accountMapper;
+	private final IPasswordValidationService passwordValidationService;
+	private final AAccountMapper accountMapper;
 
 	@Override
 	public Boolean login(String email, String password) {
-		return passwordValidationService.validate(email, password) != null;
+		Account account = passwordValidationService.validate(email, password);
+
+		Validate.notNull(account, Constants.INVALID_PASSWORD);
+
+		return true;
 	}
 
 	@Override
 	public Boolean register(String email, String password) {
 		Validate.notNull(email, Constants.EMAIL_NOT_NULL);
 		Validate.notNull(password, Constants.PASSWORD_NOT_NULL);
+
+		Account possiblyExistingAccount = accountRepository.findByEmail(email);
+
+		if (possiblyExistingAccount != null) {
+			throw new IllegalArgumentException(Constants.ALREADY_EXISTS);
+		}
 
 		Account account = new Account();
 		account.setEmail(email);
@@ -52,7 +59,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Account getAccount(String email) {
-		Validate.notNull(email);
+		Validate.notNull(email, Constants.NOT_EXISTS);
 
 		return accountRepository.findByEmail(email);
 	}
@@ -61,16 +68,18 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 	public List<AccountDTO> getAllAccounts() {
 
 		List<AccountDTO> accountDTOs = new ArrayList<>();
+		List<Account> accounts = accountRepository.findAll();
+
+		Validate.notEmpty(accounts, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
 		try {
-			accountRepository.findAll().forEach(account -> {
+			accounts.forEach(account -> {
 				if (account != null) {
 					accountDTOs.add(accountMapper.toDTO(account));
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new IllegalArgumentException(e.getMessage());
 		}
 
 		return accountDTOs;
@@ -84,6 +93,9 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 		Validate.notNull(newPassword);
 
 		Account account = passwordValidationService.validate(email, password);
+
+		Validate.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.INVALID_PASSWORD });
+
 		account.setEmail(newEmail);
 		account.setPassword(newPassword);
 
@@ -102,7 +114,10 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 		Validate.notNull(email);
 		Validate.notNull(password);
 
-		accountRepository.delete(accountRepository.findByEmailAndPassword(email, password));
+		Account toBeDeleted = accountRepository.findByEmailAndPassword(email, password);
+
+		Validate.notNull(toBeDeleted, new String[] { Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
+		accountRepository.delete(toBeDeleted);
 
 		return accountRepository.findByEmail(email) == null;
 	}
