@@ -8,35 +8,42 @@ import com.auora.api.components.account.services.crud.ILoginService;
 import com.auora.api.components.account.services.crud.IRegisterService;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
-import com.auora.api.other.Validate;
+import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Component
 @AllArgsConstructor
 public class AccountService implements IAccountService, IRegisterService, ILoginService {
 
-	private IAccountRepository accountRepository;
+	private final IAccountRepository accountRepository;
 
-	private IPasswordValidationService passwordValidationService;
-	private AAccountMapper accountMapper;
+	private final IPasswordValidationService passwordValidation;
+	private final AAccountMapper accountMapper;
 
 	@Override
 	public Boolean login(String email, String password) {
-		return passwordValidationService.validate(email, password) != null;
+		Account account = passwordValidation.validate(email, password);
+
+		Validator.notNull(account, Constants.INVALID_PASSWORD);
+
+		return true;
 	}
 
 	@Override
 	public Boolean register(String email, String password) {
-		Validate.notNull(email, Constants.EMAIL_NOT_NULL);
-		Validate.notNull(password, Constants.PASSWORD_NOT_NULL);
+		Validator.notNull(email, Constants.EMAIL_NOT_NULL);
+		Validator.notNull(password, Constants.PASSWORD_NOT_NULL);
+
+		Account possiblyExistingAccount = accountRepository.findByEmail(email);
+
+		if (possiblyExistingAccount != null) {
+			throw new IllegalArgumentException(Constants.ALREADY_EXISTS);
+		}
 
 		Account account = new Account();
 		account.setEmail(email);
@@ -52,7 +59,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Account getAccount(String email) {
-		Validate.notNull(email);
+		Validator.notNull(email, Constants.NOT_EXISTS);
 
 		return accountRepository.findByEmail(email);
 	}
@@ -61,16 +68,18 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 	public List<AccountDTO> getAllAccounts() {
 
 		List<AccountDTO> accountDTOs = new ArrayList<>();
+		List<Account> accounts = accountRepository.findAll();
+
+		Validator.notEmpty(accounts, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
 		try {
-			accountRepository.findAll().forEach(account -> {
+			accounts.forEach(account -> {
 				if (account != null) {
 					accountDTOs.add(accountMapper.toDTO(account));
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new IllegalArgumentException(e.getMessage());
 		}
 
 		return accountDTOs;
@@ -78,12 +87,15 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Boolean update(String email, String password, String newEmail, String newPassword) {
-		Validate.notNull(email);
-		Validate.notNull(password);
-		Validate.notNull(newEmail);
-		Validate.notNull(newPassword);
+		Validator.notNull(email);
+		Validator.notNull(password);
+		Validator.notNull(newEmail);
+		Validator.notNull(newPassword);
 
-		Account account = passwordValidationService.validate(email, password);
+		Account account = passwordValidation.validate(email, password);
+
+		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.INVALID_PASSWORD });
+
 		account.setEmail(newEmail);
 		account.setPassword(newPassword);
 
@@ -99,8 +111,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Boolean delete(String email, String password) {
-		Validate.notNull(email);
-		Validate.notNull(password);
+		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
 
 		accountRepository.delete(accountRepository.findByEmailAndPassword(email, password));
 

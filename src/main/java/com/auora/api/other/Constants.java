@@ -6,7 +6,7 @@ public class Constants {
 
 		/* General */
 		public static final String URL_GET = "/get";
-		public static final String URL_ALL = "/all";
+		public static final String URL_ALL = "-all";
 		public static final String URL_ADD = "/add";
 		public static final String URL_DELETE = "/delete";
 		public static final String URL_UPDATE = "/update";
@@ -40,7 +40,10 @@ public class Constants {
 	public static final String SUCCESS = "Success!";
 	public static final String SOMETHING_WRONG = "Oops! Something went wrong!";
 	public static final String INVALID_PASSWORD = "Entered E-Mail and/or Password invalid";
+	public static final String ALREADY_EXISTS = "The entered e-mail address already exists!";
 
 	public static final String EMAIL_NOT_NULL = "E-Mail can not be null!";
 	public static final String PASSWORD_NOT_NULL = "Password can not be null!";
+	public static final String TITLE_NOT_NULL = "Title and/or description can not be null!";
+	public static final String NOT_EXISTS = "The requested entity/entities is null.";
 }

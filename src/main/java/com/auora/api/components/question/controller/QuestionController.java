@@ -18,15 +18,15 @@ public class QuestionController {
 
 	private final IQuestionService questionService;
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/{email}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account")
 	public ResponseEntity<?> getAllQuestionsFromAccount(
-			@PathVariable("email") String email) {
+			@RequestParam("email") String email) {
 
 		List<QuestionDTO> questionDTOs = questionService.getAllFromAccount(email);
 
-		return questionDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(questionDTOs, HttpStatus.OK);
+		return questionDTOs != null ?
+				new ResponseEntity<>(questionDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD)
@@ -37,8 +37,8 @@ public class QuestionController {
 			@RequestHeader("description") String description) {
 
 		return questionService.addQuestion(email, password, title, description) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_UPVOTE)
@@ -48,8 +48,8 @@ public class QuestionController {
 			@RequestHeader("question-id") String questionId) {
 
 		return questionService.addUpVote(email, password, questionId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				 new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_DOWNVOTE)
@@ -59,8 +59,8 @@ public class QuestionController {
 			@RequestHeader("question-id") String questionId) {
 
 		return questionService.addDownVote(email, password, questionId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_ADD_COMMENT)
@@ -71,9 +71,9 @@ public class QuestionController {
 			@RequestHeader("title") String title,
 			@RequestHeader("description") String description) {
 
-		return questionService.addComment(email, password, questionId, title, description) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+		return questionService.addComment(email, password, title, description, questionId) ?
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_DELETE)
@@ -82,9 +82,9 @@ public class QuestionController {
 			@RequestHeader("password") String password,
 			@RequestHeader("question-id") String questionId) {
 
-		return questionService.addDownVote(email, password, questionId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+		return questionService.delete(email, password, questionId) ?
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
 

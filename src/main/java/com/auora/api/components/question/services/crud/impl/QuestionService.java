@@ -2,14 +2,14 @@ package com.auora.api.components.question.services.crud.impl;
 
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.services.crud.impl.AccountService;
-import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.components.comment.services.crud.impl.CommentService;
 import com.auora.api.components.question.dto.QuestionDTO;
 import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.question.repository.IQuestionRepository;
 import com.auora.api.components.question.services.crud.IQuestionService;
 import com.auora.api.components.question.services.mapper.AQuestionMapper;
-import com.auora.api.other.Validate;
+import com.auora.api.other.Constants;
+import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,34 +22,39 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class QuestionService implements IQuestionService {
 
-	private IQuestionRepository questionRepository;
+	private final IQuestionRepository questionRepository;
 
-	private AQuestionMapper questionMapper;
-	private IPasswordValidationService passwordValidation;
+	private final AQuestionMapper questionMapper;
+	private final IPasswordValidationService passwordValidation;
 
-	private AccountService accountService;
-	private CommentService commentService;
+	private final AccountService accountService;
+	private final CommentService commentService;
 
 	@Override
 	public List<QuestionDTO> getAllFromAccount(String email) {
-		Validate.notNull(email);
+		Validator.notNull(email);
 
 		Account account = accountService.getAccount(email);
 
-		return questionRepository.findAllByfkAccountId(account).stream()
-				.map(questionMapper::toDTO)
+		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS }, account);
+
+		List<Question> questionsFromAccount = questionRepository.findAllByfkAccountId(account);
+
+		Validator.notEmpty(questionsFromAccount, Constants.NOT_EXISTS);
+
+		 return questionsFromAccount.stream()
+				 .map(questionMapper::toDTO)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Boolean addQuestion(String email, String password, String title, String description) {
-		Validate.notNull(title);
-		Validate.notNull(description);
+		Validator.notNull(title.length() > 0 ? title : null, Constants.TITLE_NOT_NULL);
+		Validator.notNull(description.length() > 0 ? description : null, Constants.TITLE_NOT_NULL);
 
 		Account account = passwordValidation.validate(email, password);
 
-		if (account == null)
-			return false;
+		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
 		Question question = new Question();
 		question.setTitle(title);
@@ -63,66 +68,74 @@ public class QuestionService implements IQuestionService {
 
 	@Override
 	public Boolean addUpVote(String email, String password, String questionId) {
+
 		Question question = getQuestion(email, password, questionId);
+		Validator.notNull(question, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
-		assert question != null;
 		Long oldCount = question.getVotes();
-
 		Long id = question.getId();
 
-		question.addUpvote();
+		try { // In case value is null
+			question.addUpvote();
+		} catch (NullPointerException e) {
+			question.setVotes(1L);
+		}
+
+		questionRepository.save(question);
 
 		Question updatedQuestion = questionRepository.findById(id).orElseThrow();
+		Validator.notNull(updatedQuestion, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
 		return Objects.equals(++oldCount, updatedQuestion.getVotes());
 	}
 
 	@Override
 	public Boolean addDownVote(String email, String password, String questionId) {
+
 		Question question = getQuestion(email, password, questionId);
+		Validator.notNull(question, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
-		assert question != null;
 		Long oldCount = question.getVotes();
-
 		Long id = question.getId();
 
-		question.addDownVote();
+		try { // In case value is null
+			question.addDownVote();
+		} catch (NullPointerException e) {
+			question.setVotes(1L);
+		}
+
+		questionRepository.save(question);
 
 		Question updatedQuestion = questionRepository.findById(id).orElseThrow();
+		Validator.notNull(updatedQuestion, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
 		return Objects.equals(--oldCount, updatedQuestion.getVotes());
 	}
 
 	@Override
 	public Boolean addComment(String email, String password, String title, String description, String fkQuestionId) {
-		Validate.notNull(email);
-		Validate.notNull(password);
-
 		Question commentToQuestion = getQuestion(email, password, fkQuestionId);
 
-		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, title, description, commentToQuestion, null) : false;
+		return commentService.addComment(email, password, title, description, commentToQuestion, null);
 	}
 
 	@Override
 	public Boolean delete(String email, String password, String questionId) {
-		if (passwordValidation.validate(email, password) == null)
-			return false;
-
-		Validate.notNull(questionId);
+		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(questionId);
 
 		Long id = Long.parseLong(questionId);
 
-		questionRepository.delete(questionRepository.findById(id).orElseThrow());
+		// ? GTK Deleting an entity, will delete all fk to that entity
+		questionRepository.deleteById(id);
 
 		return questionRepository.findById(id).isEmpty();
 	}
 
 	public Question getQuestion(String email, String password, String questionId) {
-		if (passwordValidation.validate(email, password) == null)
-			return null;
 
-		Validate.notNull(questionId);
+		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(questionId);
 
 		Long id = Long.parseLong(questionId);
 

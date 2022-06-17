@@ -3,13 +3,13 @@ package com.auora.api.components.thread.services.crud.impl;
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.services.crud.impl.AccountService;
 import com.auora.api.components.comment.services.crud.impl.CommentService;
-import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.thread.dto.ThreadDTO;
 import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.components.thread.repository.IThreadRepository;
 import com.auora.api.components.thread.services.crud.IThreadService;
 import com.auora.api.components.thread.services.mapper.AThreadMapper;
-import com.auora.api.other.Validate;
+import com.auora.api.other.Constants;
+import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,34 +22,39 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ThreadService implements IThreadService {
 
-	private IThreadRepository threadRepository;
+	private final IThreadRepository threadRepository;
 
-	private AThreadMapper threadMapper;
-	private IPasswordValidationService passwordValidation;
+	private final AThreadMapper threadMapper;
+	private final IPasswordValidationService passwordValidation;
 
-	private AccountService accountService;
-	private CommentService commentService;
+	private final AccountService accountService;
+	private final CommentService commentService;
 
 	@Override
 	public List<ThreadDTO> getAllFromAccount(String email) {
-		Validate.notNull(email);
+		Validator.notNull(email);
 
 		Account account = accountService.getAccount(email);
 
-		return threadRepository.findAllByFkAccountId(account).stream()
+		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS }, account);
+
+		List<Thread> threadsFromAccount = threadRepository.findAllByFkAccountId(account);
+
+		Validator.notEmpty(threadsFromAccount, Constants.NOT_EXISTS);
+
+		return threadsFromAccount.stream()
 				.map(threadMapper::toDTO)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Boolean addThread(String email, String password, String title, String description) {
-		Validate.notNull(title);
-		Validate.notNull(description);
+		Validator.notNull(title.length() > 0 ? title : null, Constants.TITLE_NOT_NULL);
+		Validator.notNull(description.length() > 0 ? description : null, Constants.TITLE_NOT_NULL);
 
 		Account account = passwordValidation.validate(email, password);
 
-		if (account == null)
-			return false;
+		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
 		Thread thread = new Thread();
 		thread.setTitle(title);
@@ -62,67 +67,75 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Boolean addUpVote(String email, String password, String questionId) {
-		Thread thread = getThread(email, password, questionId);
+	public Boolean addUpVote(String email, String password, String threadId) {
 
-		assert thread != null;
+		Thread thread = getThread(email, password, threadId);
+		Validator.notNull(thread, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
+
 		Long oldCount = thread.getVotes();
-
 		Long id = thread.getId();
 
-		thread.addUpvote();
+		try { // In case value is null
+			thread.addUpvote();
+		} catch (NullPointerException e) {
+			thread.setVotes(1L);
+		}
 
-		Thread updatedThread = threadRepository.findById(id).orElseThrow();
+		threadRepository.save(thread);
 
-		return Objects.equals(++oldCount, updatedThread.getVotes());
+		Thread updatedQuestion = threadRepository.findById(id).orElseThrow();
+		Validator.notNull(updatedQuestion, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
+
+		return Objects.equals(++oldCount, updatedQuestion.getVotes());
 	}
 
 	@Override
 	public Boolean addDownVote(String email, String password, String questionId) {
+
 		Thread thread = getThread(email, password, questionId);
+		Validator.notNull(thread, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
 
-		assert thread != null;
 		Long oldCount = thread.getVotes();
-
 		Long id = thread.getId();
 
-		thread.addDownVote();
+		try { // In case value is null
+			thread.addDownVote();
+		} catch (NullPointerException e) {
+			thread.setVotes(1L);
+		}
 
-		Thread updatedThread = threadRepository.findById(id).orElseThrow();
+		threadRepository.save(thread);
 
-		return Objects.equals(--oldCount, updatedThread.getVotes());
+		Thread updatedQuestion = threadRepository.findById(id).orElseThrow();
+		Validator.notNull(updatedQuestion, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
+
+		return Objects.equals(--oldCount, updatedQuestion.getVotes());
 	}
 
 	@Override
 	public Boolean addComment(String email, String password, String fkThreadId, String title, String description) {
-		Validate.notNull(email);
-		Validate.notNull(password);
-
 		Thread commentToThread = getThread(email, password, fkThreadId);
 
-		return passwordValidation.validate(email, password) != null ?
-				commentService.addComment(email, password, title, description, null, commentToThread) : false;
+		return commentService.addComment(email, password, title, description, null, commentToThread);
 	}
 
 	@Override
 	public Boolean delete(String email, String password, String questionId) {
-		if (passwordValidation.validate(email, password) == null)
-			return false;
-
-		Validate.notNull(questionId);
+		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(questionId);
 
 		Long id = Long.parseLong(questionId);
 
-		threadRepository.delete(threadRepository.findById(id).orElseThrow());
+		// ? GTK Deleting an entity, will delete all fk to that entity
+		threadRepository.deleteById(id);
 
 		return threadRepository.findById(id).isEmpty();
 	}
 
 	public Thread getThread(String email, String password, String threadId) {
-		if (passwordValidation.validate(email, password) == null)
-			return null;
 
-		Validate.notNull(threadId);
+		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(threadId);
 
 		Long id = Long.parseLong(threadId);
 

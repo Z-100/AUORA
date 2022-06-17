@@ -18,15 +18,15 @@ public class ThreadController {
 
 	private final IThreadService threadService;
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/{email}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account")
 	public ResponseEntity<?> getAllThreadsFromAccount(
-			@PathVariable("email") String email) {
+			@RequestParam("email") String email) {
 
 		List<ThreadDTO> threadDTOs = threadService.getAllFromAccount(email);
 
-		return threadDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(threadDTOs, HttpStatus.OK);
+		return threadDTOs != null ?
+				new ResponseEntity<>(threadDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD)
@@ -37,8 +37,8 @@ public class ThreadController {
 			@RequestHeader("description") String description) {
 
 		return threadService.addThread(email, password, title, description) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_UPVOTE)
@@ -48,8 +48,8 @@ public class ThreadController {
 			@RequestHeader("thread-id") String threadId) {
 
 		return threadService.addUpVote(email, password, threadId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_DOWNVOTE)
@@ -59,8 +59,8 @@ public class ThreadController {
 			@RequestHeader("thread-id") String threadId) {
 
 		return threadService.addDownVote(email, password, threadId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_ADD_COMMENT)
@@ -72,8 +72,8 @@ public class ThreadController {
 			@RequestHeader("description") String description) {
 
 		return threadService.addComment(email, password, threadId, title, description) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_DELETE)
@@ -82,8 +82,8 @@ public class ThreadController {
 			@RequestHeader("password") String password,
 			@RequestHeader("thread-id") String threadId) {
 
-		return threadService.addDownVote(email, password, threadId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+		return threadService.delete(email, password, threadId) ?
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

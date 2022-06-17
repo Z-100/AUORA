@@ -18,37 +18,37 @@ public class CommentController {
 
 	private final ICommentService commentService;
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account/{email}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account")
 	public ResponseEntity<?> getAllFromAccount(
-			@PathVariable("email") String email) {
+			@RequestParam("email") String email) {
 
 		List<CommentDTO> commentDTOs = commentService.getAllFromAccount(email);
 
-		return commentDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(commentDTOs, HttpStatus.OK);
+		return commentDTOs != null ?
+				new ResponseEntity<>(commentDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-question/{question-id}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-question")
 	public ResponseEntity<?> getAllFromQuestion(
-			@PathVariable("question-id") String questionId) {
+			@RequestParam("question-id") String questionId) {
 
 		List<CommentDTO> commentDTOs = commentService.getAllFromQuestion(questionId);
 
-		return commentDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(commentDTOs, HttpStatus.OK);
+		return commentDTOs != null ?
+				new ResponseEntity<>(commentDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-thread/{thread-id}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-thread")
 	public ResponseEntity<?> getAllFromThread(
-			@PathVariable("thread-id") String threadId) {
+			@RequestParam("thread-id") String threadId) {
 
 		List<CommentDTO> commentDTOs = commentService.getAllFromThread(threadId);
 
-		return commentDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(commentDTOs, HttpStatus.OK);
+		return commentDTOs != null ?
+				new ResponseEntity<>(commentDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_UPVOTE)
@@ -58,8 +58,8 @@ public class CommentController {
 			@RequestHeader("comment-id") String commentId) {
 
 		return commentService.addUpVote(email, password, commentId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_ADD + Constants.URL_DOWNVOTE)
@@ -69,19 +69,19 @@ public class CommentController {
 			@RequestHeader("comment-id") String commentId) {
 
 		return commentService.addDownVote(email, password, commentId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@PostMapping(Constants.URL_ADD + Constants.URL_DELETE)
+	@PostMapping(Constants.URL_DELETE)
 	public ResponseEntity<?> deleteComment(
 			@RequestHeader("email") String email,
 			@RequestHeader("password") String password,
 			@RequestHeader("comment-id") String commentId) {
 
-		return commentService.addDownVote(email, password, commentId) ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+		return commentService.delete(email, password, commentId) ?
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
 

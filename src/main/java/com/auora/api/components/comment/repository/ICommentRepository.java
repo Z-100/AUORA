@@ -2,8 +2,6 @@ package com.auora.api.components.comment.repository;
 
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.comment.entity.Comment;
-import com.auora.api.components.question.entity.Question;
-import com.auora.api.components.thread.entity.Thread;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,9 @@ public interface ICommentRepository extends CrudRepository<Comment, Long> {
 
 	List<Comment> findAllByFkAccountId(Account fkAccountId);
 
-	List<Comment> findAllByFkQuestionId(Question fkQuestionId);
+	List<Comment> findAllByFkQuestionIdId(Long fkQuestionId);
 
-	List<Comment> findAllByFkThreadId(Thread fkThreadId);
+	List<Comment> findAllByFkThreadIdId(Long fkThreadId);
+
+	void deleteById(Long id);
 }

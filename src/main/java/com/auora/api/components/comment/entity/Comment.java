@@ -28,20 +28,20 @@ public class Comment {
 	private String description;
 
 	@Column(name = "votes")
-	private Long votes; //+/- possible
+	private Long votes = 1L; //+/- possible
 
 	@ManyToOne
-	@JoinColumn(name = "fkAccountId")
+	@JoinColumn(name = "fk_account_id")
 	@JsonManagedReference
 	private Account fkAccountId;
 
 	@ManyToOne
-	@JoinColumn(name = "fkQuestionId")
+	@JoinColumn(name = "fk_question_id")
 	@JsonManagedReference
 	private Question fkQuestionId;
 
 	@ManyToOne
-	@JoinColumn(name = "fkThreadId")
+	@JoinColumn(name = "fk_thread_id")
 	@JsonManagedReference
 	private Thread fkThreadId;
 

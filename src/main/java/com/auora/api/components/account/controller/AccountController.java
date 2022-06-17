@@ -24,8 +24,8 @@ public class AccountController {
 			@RequestHeader("password") final String password) {
 
 		return accountService.login(email, password) ?
-				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_REGISTER)
@@ -34,8 +34,9 @@ public class AccountController {
 			@RequestHeader("password") final String password) {
 
 		return accountService.register(email, password) ?
-				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
 	@GetMapping(Constants.URL_GET + Constants.URL_ALL)
@@ -43,9 +44,9 @@ public class AccountController {
 
 		List<AccountDTO> accountDTOs = accountService.getAllAccounts();
 
-		return accountDTOs == null ?
-				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(accountDTOs, HttpStatus.OK);
+		return accountDTOs != null ?
+				new ResponseEntity<>(accountDTOs, HttpStatus.OK) :
+				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_DELETE)
@@ -54,8 +55,8 @@ public class AccountController {
 			@RequestHeader("password") String password) {
 
 		return accountService.delete(email, password) ?
-				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping(Constants.URL_UPDATE)
@@ -66,7 +67,7 @@ public class AccountController {
 			@RequestHeader("new-password") String newPassword) {
 
 		return accountService.update(email, password, newEmail, newPassword) ?
-				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR) :
-				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK);
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
