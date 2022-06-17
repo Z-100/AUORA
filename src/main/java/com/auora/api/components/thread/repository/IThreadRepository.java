@@ -16,4 +16,6 @@ public interface IThreadRepository extends CrudRepository<Thread, Long> {
 	List<Thread> findAllByFkAccountId(Account fkAccountId);
 
 	Iterable<Thread> findAll();
+
+	void deleteById(Long id);
 }

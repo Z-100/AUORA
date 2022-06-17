@@ -44,6 +44,6 @@ public class Constants {
 
 	public static final String EMAIL_NOT_NULL = "E-Mail can not be null!";
 	public static final String PASSWORD_NOT_NULL = "Password can not be null!";
-	public static final String TITLE_NOT_NULL = "E-Mail and/or description can not be null!";
+	public static final String TITLE_NOT_NULL = "Title and/or description can not be null!";
 	public static final String NOT_EXISTS = "The requested entity/entities is null.";
 }

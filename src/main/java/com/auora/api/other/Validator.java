@@ -2,7 +2,7 @@ package com.auora.api.other;
 
 import java.util.Collection;
 
-public class Validate<T> {
+public class Validator<T> {
 
 	public static <T> T notNull(final T t) {
 		if (t == null) {
