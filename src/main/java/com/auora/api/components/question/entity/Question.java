@@ -38,7 +38,7 @@ public class Question {
 	private List<Comment> comments;
 
 	@ManyToOne
-	@JoinColumn(name = "fkAccountId")
+	@JoinColumn(name = "fk_account_id")
 	@JsonManagedReference
 	private Account fkAccountId;
 

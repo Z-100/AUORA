@@ -8,19 +8,15 @@ import com.auora.api.components.comment.repository.ICommentRepository;
 import com.auora.api.components.comment.services.crud.ICommentService;
 import com.auora.api.components.comment.services.mapper.ACommentMapper;
 import com.auora.api.components.question.entity.Question;
-import com.auora.api.components.question.services.crud.impl.QuestionService;
 import com.auora.api.components.thread.entity.Thread;
-import com.auora.api.components.thread.services.crud.impl.ThreadService;
 import com.auora.api.other.Constants;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component

@@ -2,7 +2,6 @@ package com.auora.api.components.question.services.crud.impl;
 
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.services.crud.impl.AccountService;
-import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.components.comment.services.crud.impl.CommentService;
 import com.auora.api.components.question.dto.QuestionDTO;
 import com.auora.api.components.question.entity.Question;

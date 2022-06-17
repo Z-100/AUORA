@@ -1,7 +1,6 @@
 package com.auora.api.components.thread.services.crud;
 
 import com.auora.api.components.thread.dto.ThreadDTO;
-import com.auora.api.components.thread.entity.Thread;
 
 import java.util.List;
 

@@ -3,7 +3,6 @@ package com.auora.api.components.thread.services.crud.impl;
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.services.crud.impl.AccountService;
 import com.auora.api.components.comment.services.crud.impl.CommentService;
-import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.thread.dto.ThreadDTO;
 import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.components.thread.repository.IThreadRepository;
@@ -22,13 +21,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ThreadService implements IThreadService {
 
-	private IThreadRepository threadRepository;
+	private final IThreadRepository threadRepository;
 
-	private AThreadMapper threadMapper;
-	private IPasswordValidationService passwordValidation;
+	private final AThreadMapper threadMapper;
+	private final IPasswordValidationService passwordValidation;
 
-	private AccountService accountService;
-	private CommentService commentService;
+	private final AccountService accountService;
+	private final CommentService commentService;
 
 	@Override
 	public List<ThreadDTO> getAllFromAccount(String email) {

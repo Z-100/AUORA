@@ -29,7 +29,7 @@ public class Thread {
 	private String description;
 
 	@Column(name = "votes")
-	private Long votes;
+	private Long votes = 1L;
 
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,
@@ -38,7 +38,7 @@ public class Thread {
 	private List<Comment> comments;
 
 	@ManyToOne
-	@JoinColumn(name = "fkAccountId")
+	@JoinColumn(name = "fk_account_id")
 	@JsonManagedReference
 	private Account fkAccountId;
 

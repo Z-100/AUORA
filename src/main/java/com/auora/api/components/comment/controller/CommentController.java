@@ -18,7 +18,7 @@ public class CommentController {
 
 	private final ICommentService commentService;
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account/{email}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-account{email}")
 	public ResponseEntity<?> getAllFromAccount(
 			@PathVariable("email") String email) {
 
@@ -29,7 +29,7 @@ public class CommentController {
 				new ResponseEntity<>(commentDTOs, HttpStatus.OK);
 	}
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-question/{question-id}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-question{question-id}")
 	public ResponseEntity<?> getAllFromQuestion(
 			@PathVariable("question-id") String questionId) {
 
@@ -40,7 +40,7 @@ public class CommentController {
 				new ResponseEntity<>(commentDTOs, HttpStatus.OK);
 	}
 
-	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-thread/{thread-id}")
+	@GetMapping(Constants.URL_GET + Constants.URL_ALL + "/from-thread{thread-id}")
 	public ResponseEntity<?> getAllFromThread(
 			@PathVariable("thread-id") String threadId) {
 

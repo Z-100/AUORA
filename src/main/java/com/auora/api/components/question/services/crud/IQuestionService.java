@@ -1,7 +1,6 @@
 package com.auora.api.components.question.services.crud;
 
 import com.auora.api.components.question.dto.QuestionDTO;
-import com.auora.api.components.question.entity.Question;
 
 import java.util.List;
 
