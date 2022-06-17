@@ -5,6 +5,7 @@ import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.other.Constants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.relational.core.mapping.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = Constants.DB_ACCOUNT)
+@Table(name = Constants.DB_THREAD)
 public class Thread {
 
 	@Id
@@ -41,7 +42,6 @@ public class Thread {
 	@JoinColumn(name = "fkAccountId")
 	@JsonManagedReference
 	private Account fkAccountId;
-
 
 	public void addUpvote() {
 		votes++;

@@ -5,6 +5,7 @@ import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.other.Constants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.relational.core.mapping.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = Constants.DB_ACCOUNT)
+@Table(name = Constants.DB_QUESTION)
 public class Question {
 
 	@Id
@@ -33,7 +34,7 @@ public class Question {
 
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,
-			mappedBy = "fkThreadId")
+			mappedBy = "fkQuestionId")
 	@JsonBackReference
 	private List<Comment> comments;
 

@@ -4,11 +4,13 @@ import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.thread.entity.Thread;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface IThreadRepository extends CrudRepository<Thread, Long> {
 
 	Optional<Thread> findById(Long id);
