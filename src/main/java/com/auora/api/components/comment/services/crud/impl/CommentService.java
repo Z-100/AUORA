@@ -11,6 +11,7 @@ import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.question.services.crud.impl.QuestionService;
 import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.components.thread.services.crud.impl.ThreadService;
+import com.auora.api.other.Constants;
 import com.auora.api.other.Validate;
 import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
@@ -26,12 +27,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CommentService implements ICommentService {
 
-	private ICommentRepository commentRepository;
+	private final ICommentRepository commentRepository;
 
-	private ACommentMapper commentMapper;
-	private IPasswordValidationService passwordValidation;
+	private final ACommentMapper commentMapper;
+	private final IPasswordValidationService passwordValidation;
 
-	private AccountService accountService;
+	private final AccountService accountService;
 
 	@Override
 	public List<CommentDTO> getAllFromAccount(String email) {
@@ -104,9 +105,8 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public Boolean addComment(String email, String password, String title, String description, Question fkQuestionId, Thread fkThreadId) {
-		Validate.notNull(title);
-		Validate.notNull(description);
-		Validate.notNull(email);
+		Validate.notNull(title.length() > 0 ? title : null, Constants.TITLE_NOT_NULL);
+		Validate.notNull(description.length() > 0 ? description : null, Constants.TITLE_NOT_NULL);
 
 		Comment comment = new Comment();
 		comment.setTitle(title);

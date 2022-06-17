@@ -29,7 +29,7 @@ public class Question {
 	private String description;
 
 	@Column(name = "votes")
-	private Long votes; //+/- possible
+	private Long votes = 1L; //+/- possible
 
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,
