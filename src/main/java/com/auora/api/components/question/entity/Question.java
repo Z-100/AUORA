@@ -5,7 +5,6 @@ import com.auora.api.components.comment.entity.Comment;
 import com.auora.api.other.Constants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.data.relational.core.mapping.Table;
 import lombok.Getter;
 import lombok.Setter;
 

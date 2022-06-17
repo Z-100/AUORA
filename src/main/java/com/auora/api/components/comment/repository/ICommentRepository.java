@@ -6,12 +6,10 @@ import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.thread.entity.Thread;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@Transactional
 public interface ICommentRepository extends CrudRepository<Comment, Long> {
 
 	List<Comment> findAllByFkAccountId(Account fkAccountId);
