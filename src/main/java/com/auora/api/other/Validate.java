@@ -1,7 +1,5 @@
 package com.auora.api.other;
 
-import com.auora.api.components.account.entity.Account;
-
 import java.util.Collection;
 
 public class Validate<T> {
