@@ -1,6 +1,9 @@
 ## MariaDB instance bound to port 3307 on the host. Data is persisted.
 ## PhpMyAdmin instance bound to port 8000. Use root as user and password.
 
+## php -S localhost:9081
+## docker-compose up -d
+
 version: '3.1'
 
 services:
