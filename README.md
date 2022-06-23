@@ -21,9 +21,53 @@ is expandable and easy to use:
     * Store once, use many times
 * To add more features like topics or categories, just add more entities.
 
+##Documentation
+
+### The things, which changed
+
+#### The updated class diagram
+
+Quite a low amount of stuff changed in the backend. But the classes and dependencies which did are listed here:
+* EntityFactory.java
+* ...
+
+![New classdiagram](https://github.com/z-100/auora/tree/master/other/class/updated.png)
+
+#### The updated use case
+
+Not many functionalities have changed in the frontend. What I forgot in planning however, was security:
+* I implemented further password validation
+* ...
+
+![New usecase diagram](https://github.com/z-100/auora/tree/master/other/usecase/updated.png)
+
+### What technologies were being used?
+
+| The technology | What was it used for?                                                               | Where to find?                                                                                                                    |
+|:---------------|:------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------|
+| Java 17        | The entire project is written in Java                                               | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java)                                                             |
+| Spring Boot    | The API-layer of the application (including repositories, entities and controllers) | [com.auora.api.components.[...]](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)               |
+| MapStruct      | The mapping between the entities and DTOs of the project                            | [com.auora.api.components.[...].service.mapper](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)|
+| Lombok         | The getters & setters in the entities. The constructors in other components         | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                            |
+
+| The pattern       | What it does in the project                                                         | Where to find?                                                                                                                                 |
+|:------------------|:------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
+| Factory Pattern   | Instantiates all kinds of objects                                                   | [com.auora.service.impl.EntityFactory](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/service/impl/EntityFactory.java) |
+| Bridge Pattern    | Sends data from API- to backend-layer                                               | [com.auora.api.components.[...].controller](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)                 |
+| Singleton Pattern |                                                                                     | [com.auora.api.components.[...].service.mapper](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)             |
+| SOLID - S         | Each class/method has one general purpose                                           | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                                         |
+| SOLID - O         | Entities can not be modified. Only properties via setters and getters               | [com.auora.api.components.[...].entity](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)                     |
+| SOLID - L         | Classes are not being extended if its' unnecessary                                  | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                                         |
+| SOLID - I         | As seen in e.g. .account: Three different interfaces for different responsibilities | [com.auora.api.components.[...].service.crud](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)               |
+| SOLID - D         |                                                                                     | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                                         |
+
+### The test cases
+
+### How I worked myself through the project
+
 ## Requirements
 
-### Design
+### Design**
 
 | The requirement                                                            | Done |
 |:---------------------------------------------------------------------------|:----:|
