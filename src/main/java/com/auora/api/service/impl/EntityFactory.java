@@ -1,6 +1,8 @@
 package com.auora.api.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Z-100
@@ -19,20 +21,20 @@ public class EntityFactory <T, E> {
 		}
 	}
 
-	@SafeVarargs
-	public static <T, E> T getInstance(Class<T> obj, E... args) {
+	public static <T> List<T> getListInstance(Class<T> t) {
 		try {
-			return obj.getDeclaredConstructor(obj).newInstance((Object[]) args);
+			return new ArrayList<T>();
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
-	public static <T extends Collection<?>> T getInstance(Class<T> obj, String... s) {
+	public static <T extends Collection<?>, E> T getInstance(Class<T> t, Class<E> args) {
 		try {
-			return obj.getDeclaredConstructor().newInstance();
+			return t.getDeclaredConstructor(args).newInstance(args);
 		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
+			e.printStackTrace();
+			throw new IllegalArgumentException();
 		}
 	}
 }
