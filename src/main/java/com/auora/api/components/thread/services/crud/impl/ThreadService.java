@@ -11,11 +11,13 @@ import com.auora.api.components.thread.services.mapper.AThreadMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
+import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -56,7 +58,7 @@ public class ThreadService implements IThreadService {
 
 		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
-		Thread thread = new Thread();
+		Thread thread = EntityFactory.getInstance(Thread.class);
 		thread.setTitle(title);
 		thread.setDescription(description);
 		thread.setFkAccountId(account);
@@ -120,13 +122,21 @@ public class ThreadService implements IThreadService {
 	}
 
 	@Override
-	public Boolean delete(String email, String password, String questionId) {
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
-		Validator.notNull(questionId);
+	public Boolean delete(String email, String password, String threadId) {
+		Validator.notNull(threadId);
+		Long id = Long.parseLong(threadId);
 
-		Long id = Long.parseLong(questionId);
+		Account validate = passwordValidation.validate(email, password);
+		Validator.notNull(validate, Constants.INVALID_PASSWORD);
 
-		// ? GTK Deleting an entity, will delete all fk to that entity
+		Optional<Thread> byId = threadRepository.findById(id);
+
+		if (byId.isEmpty()) {
+			throw new IllegalArgumentException(Constants.NOT_EXISTS);
+		}
+
+		Validator.equals(validate.getId(), byId.get().getFkAccountId().getId(), Constants.INVALID_PASSWORD);
+
 		threadRepository.deleteById(id);
 
 		return threadRepository.findById(id).isEmpty();

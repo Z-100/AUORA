@@ -11,11 +11,13 @@ import com.auora.api.components.question.services.mapper.AQuestionMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
+import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -56,7 +58,7 @@ public class QuestionService implements IQuestionService {
 
 		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
-		Question question = new Question();
+		Question question = EntityFactory.getInstance(Question.class);
 		question.setTitle(title);
 		question.setDescription(description);
 		question.setFkAccountId(account);
@@ -121,10 +123,19 @@ public class QuestionService implements IQuestionService {
 
 	@Override
 	public Boolean delete(String email, String password, String questionId) {
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
 		Validator.notNull(questionId);
-
 		Long id = Long.parseLong(questionId);
+
+		Account validate = passwordValidation.validate(email, password);
+		Validator.notNull(validate, Constants.INVALID_PASSWORD);
+
+		Optional<Question> byId = questionRepository.findById(id);
+
+		if (byId.isEmpty()) {
+			throw new IllegalArgumentException(Constants.NOT_EXISTS);
+		}
+
+		Validator.equals(validate.getId(), byId.get().getFkAccountId().getId(), Constants.INVALID_PASSWORD);
 
 		// ? GTK Deleting an entity, will delete all fk to that entity
 		questionRepository.deleteById(id);

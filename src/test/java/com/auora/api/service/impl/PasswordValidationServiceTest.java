@@ -28,7 +28,7 @@ class PasswordValidationServiceTest {
 	Account mockAccount;
 
 	void setUpMockAccount() {
-		mockAccount = new Account();
+		mockAccount = EntityFactory.getInstance(Account.class);
 		mockAccount.setEmail("email");
 		mockAccount.setPassword("password");
 

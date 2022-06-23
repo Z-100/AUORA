@@ -18,7 +18,8 @@ public class PasswordValidationService implements IPasswordValidationService {
 	public Account validate(String email, String password) {
 		Validator.notNull(email, Constants.EMAIL_NOT_NULL);
 		Validator.notNull(password, Constants.PASSWORD_NOT_NULL);
-
+		//TODO only check email & hash password
+		//TODO parameter: account. No database connection
 		return accountRepository.findByEmailAndPassword(email, password);
 	}
 }

@@ -1,5 +1,7 @@
 package com.auora.api.other;
 
+import com.auora.api.service.impl.EntityFactory;
+
 import java.util.Collection;
 
 public class Validator<T> {
@@ -20,7 +22,7 @@ public class Validator<T> {
 
 	public static <T> T notNull(final T t, final String[] messages) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -39,7 +41,7 @@ public class Validator<T> {
 
 	public static <T> T notNull(final T t, final String[] messages, final Object... values) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -73,7 +75,7 @@ public class Validator<T> {
 
 	public static <T> T[] notNull(final T[] t, final String[] messages) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -82,7 +84,7 @@ public class Validator<T> {
 		}
 
 		if (t.length == 0) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -105,7 +107,7 @@ public class Validator<T> {
 
 	public static <T> T[] notNull(final T[] t, final String[] messages, final Object... values) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -114,7 +116,7 @@ public class Validator<T> {
 		}
 
 		if (t.length == 0) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -148,7 +150,7 @@ public class Validator<T> {
 
 	public static <T extends Collection<?>> T notEmpty(final T t, final String[] messages) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -157,7 +159,7 @@ public class Validator<T> {
 		}
 
 		if (t.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -180,7 +182,7 @@ public class Validator<T> {
 
 	public static <T extends Collection<?>> T notEmpty(final T t, final String[] messages, final Object... values) {
 		if (t == null) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -189,7 +191,7 @@ public class Validator<T> {
 		}
 
 		if (t.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
 
 			for (String s : messages)
 				sb.append(s).append(" ");
@@ -197,5 +199,75 @@ public class Validator<T> {
 			throw new IllegalArgumentException(String.format(sb.toString(), values));
 		}
 		return t;
+	}
+
+	public static <T, E> void equals(final T t, final E e) {
+		if (t == null || e == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (!t.equals(e)) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public static <T, E> void equals(final T t, final E e, String message) {
+		if (t == null || e == null) {
+			throw new IllegalArgumentException(message);
+		}
+
+		if (!t.equals(e)) {
+			throw new IllegalArgumentException(message);
+		}
+	}
+
+	public static <T, E> void equals(final T t, final E e, String[] messages) {
+		if (t == null || e == null) {
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
+
+			for (String s : messages)
+				sb.append(s).append(" ");
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		if (!t.equals(e)) {
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
+
+			for (String s : messages)
+				sb.append(s).append(" ");
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+	}
+
+	public static <T, E> void equals(final T t, final E e, String message, Object... values) {
+		if (t == null || e == null) {
+			throw new IllegalArgumentException(String.format(message, values));
+		}
+
+		if (!t.equals(e)) {
+			throw new IllegalArgumentException(String.format(message, values));
+		}
+	}
+
+	public static <T, E> void equals(final T t, final E e, String[] messages, Object... values) {
+		if (t == null || e == null) {
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
+
+			for (String s : messages)
+				sb.append(s).append(" ");
+
+			throw new IllegalArgumentException(String.format(sb.toString(), values));
+		}
+
+		if (!t.equals(e)) {
+			StringBuilder sb = EntityFactory.getInstance(StringBuilder.class);
+
+			for (String s : messages)
+				sb.append(s).append(" ");
+
+			throw new IllegalArgumentException(String.format(sb.toString(), values));
+		}
 	}
 }
