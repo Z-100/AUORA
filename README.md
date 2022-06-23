@@ -92,7 +92,7 @@ Not many functionalities have changed in the frontend. What I forgot in planning
 
 #### Domain Model
 
-![domain-before](https://github.com/Z-100/AUORA/tree/master/other/domain/before.png)
+![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
 ![domain-after](https://github.com/Z-100/AUORA/tree/master/other/domain/before.png)
 
 #### CRC Cards
