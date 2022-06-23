@@ -82,28 +82,28 @@ Not many functionalities have changed in the frontend. What I forgot in planning
 
 #### Use Case Model
 
-![usecase-before](https://github.com/Z-100/AUORA/tree/master/other/usecase/before.png)
-![usecase-after](https://github.com/Z-100/AUORA/tree/master/other/usecase/after.png)
+![usecase-before](https://github.com/Z-100/AUORA/tree/blob/other/usecase/before.png)
+![usecase-after](https://github.com/Z-100/AUORA/tree/blob/other/usecase/after.png)
 
 #### Use Case Specification
 
-![usecase-spec-before](https://github.com/Z-100/AUORA/tree/master/other/usecase/usecase_spec.png)
-![usecase-spec-after](https://github.com/Z-100/AUORA/tree/master/other/usecase/usecase_spec_after.png)
+![usecase-spec-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec.png)
+![usecase-spec-after](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_after.png)
 
 #### Domain Model
 
 ![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
-![domain-after](https://github.com/Z-100/AUORA/tree/master/other/domain/before.png)
+![domain-after](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
 
 #### CRC Cards
 
-[crc-before](https://github.com/Z-100/AUORA/tree/master/other/domain/cards.json)
-[crc-after](https://github.com/Z-100/AUORA/tree/master/other/domain/cards_after.json)
+[crc-before](https://github.com/Z-100/AUORA/blob/master/other/domain/cards.json)
+[crc-after](https://github.com/Z-100/AUORA/blob/master/other/domain/cards_after.json)
 
 #### Class Diagram
 
-[crc-before](https://github.com/Z-100/AUORA/tree/master/other/class/before.png)
-[crc-after](https://github.com/Z-100/AUORA/tree/master/other/class/after.png)
+[class-before](https://github.com/Z-100/AUORA/blob/master/other/class/before.png)
+[class-after](https://github.com/Z-100/AUORA/blob/master/other/class/after.png)
 
 
 ## Requirements
