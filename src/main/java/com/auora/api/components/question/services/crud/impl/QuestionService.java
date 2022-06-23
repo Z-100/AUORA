@@ -9,7 +9,7 @@ import com.auora.api.components.question.repository.IQuestionRepository;
 import com.auora.api.components.question.services.crud.IQuestionService;
 import com.auora.api.components.question.services.mapper.AQuestionMapper;
 import com.auora.api.other.Constants;
-import com.auora.api.other.Validator;
+import com.auora.api.service.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;

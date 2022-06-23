@@ -1,12 +1,11 @@
 package com.auora.api.components.account.services.crud.impl;
 
-import com.auora.api.components.account.dto.AccountDTO;
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.service.impl.EntityFactory;
-import com.auora.api.service.impl.PasswordValidationService;
+import com.auora.api.service.PasswordValidationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,15 +95,5 @@ class AccountServiceTest {
 				() -> assertEquals(accountFromService.getEmail(), mockAccountInDB.getEmail()),
 				() -> assertEquals(accountFromService.getPassword(), mockAccountInDB.getPassword())
 		);
-	}
-
-	@Test
-	void testUpdate() {
-		//TODO
-	}
-
-	@Test
-	void testDelete() {
-		//TODO
 	}
 }

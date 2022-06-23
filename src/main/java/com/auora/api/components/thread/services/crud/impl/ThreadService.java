@@ -9,7 +9,7 @@ import com.auora.api.components.thread.repository.IThreadRepository;
 import com.auora.api.components.thread.services.crud.IThreadService;
 import com.auora.api.components.thread.services.mapper.AThreadMapper;
 import com.auora.api.other.Constants;
-import com.auora.api.other.Validator;
+import com.auora.api.service.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,8 @@
-package com.auora.api.service.impl;
+package com.auora.api.service;
 
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.other.Constants;
-import com.auora.api.other.Validator;
-import com.auora.api.service.IPasswordValidationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

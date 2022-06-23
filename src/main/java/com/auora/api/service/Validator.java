@@ -1,4 +1,4 @@
-package com.auora.api.other;
+package com.auora.api.service;
 
 import com.auora.api.service.impl.EntityFactory;
 

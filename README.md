@@ -26,7 +26,7 @@ is expandable and easy to use:
 
 ### How I worked myself through the project
 
-The whole project started off as an idea. I wanted to create another Spring Boot RESTful API-project.
+The whole project started off as an idea. I wanted to create another Spring Boot REST-ful API-project.
 The idea sounded great, as I was able to greatly improve my SpringBoot skills once again.
 
 After the idea, and the initial [description](#description) I continued with the design of the  whole application:
@@ -45,7 +45,7 @@ Quite a low amount of stuff changed in the backend. But the classes and dependen
 * EntityFactory.java
 * ...
 
-![New classdiagram](https://github.com/z-100/auora/tree/master/other/class/updated.png)
+![New class diagram](https://github.com/z-100/auora/tree/master/other/class/updated.png)
 
 #### The updated use case
 
@@ -107,13 +107,13 @@ The crc cards have been there since the beginning.
 
 In the class diagram, some stuff has been modified; some more classes were added, I switched up some relationships, ...
 
-The reason for that is simple. I am not as advanced in Spring Boot as developers, programming Spring Boot applications for 10 years straight and there were many new ideas, just coming into my mind, as I was doing some of my programming and equally as many things, which weren't working the way intended. 
+The reason for that is simple. I am not as advanced in Spring Boot as developers, programming Spring Boot applications for 10 years straight and there were many new ideas, just coming into my mind, as I was doing some of my programming and equally many things, which weren't working the way intended. 
 
-An example for that, was the new dependencies in between the Thread/Question <- Comment Services. I originally intended to just pass in the id as a foreign key to set it. But I declared the foreign key as an object of that Type and not just a simple Long. Therefore I'd have to use the other repositories.
+An example for that, was the new dependencies in between the Thread/Question <- Comment Services. I originally intended to just pass in the id as a foreign key to set it. But I declared the foreign key as an object of that Type and not just a simple Long. Therefore, I'd have to use the other repositories.
 <br/>
-As this would've been a dumb descision and work against SOLID, I just exported the "addComment" methods to the corresponding Question & Thread Services.
+As this would've been a dumb decision and work against SOLID, I just exported the "addComment" methods to the corresponding Question & Thread Services.
 
-Another example would be the entirety of the Validator & Factory. I did not intend to use the Factory pattern, but saw it's one of the requirements and implemented that aswell. The Validator was another idea, as multiple of the same checks would've been redundant.
+Another example would be the entirety of the Validator & Factory. I did not intend to use the Factory pattern, but saw it's one of the requirements and implemented that as well. The Validator was another idea, as multiple of the same checks would've been redundant.
 
 ##### Class diagram after planning
 ![class-before](https://github.com/Z-100/AUORA/blob/master/other/class/before.png)

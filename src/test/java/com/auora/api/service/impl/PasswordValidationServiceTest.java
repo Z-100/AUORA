@@ -3,6 +3,7 @@ package com.auora.api.service.impl;
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.other.Constants;
+import com.auora.api.service.PasswordValidationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

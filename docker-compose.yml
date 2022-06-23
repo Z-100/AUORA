@@ -10,7 +10,7 @@ services:
   db:
     image: mariadb
     ports:
-      - 3307:3306
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
@@ -19,7 +19,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     ports:
-      - 8000:80
+      - "8000:80"
     environment:
       - PMA_ARBITRARY=1
 

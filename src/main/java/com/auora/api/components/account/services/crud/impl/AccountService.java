@@ -8,16 +8,13 @@ import com.auora.api.components.account.services.crud.ILoginService;
 import com.auora.api.components.account.services.crud.IRegisterService;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
-import com.auora.api.other.Validator;
+import com.auora.api.service.Validator;
 import com.auora.api.service.IPasswordValidationService;
 import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @Component
 @AllArgsConstructor
