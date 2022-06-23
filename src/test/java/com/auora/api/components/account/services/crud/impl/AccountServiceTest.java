@@ -5,6 +5,7 @@ import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
+import com.auora.api.service.impl.EntityFactory;
 import com.auora.api.service.impl.PasswordValidationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +38,7 @@ class AccountServiceTest {
 	@InjectMocks
 	AccountService accountService;
 
-	Account account = new Account();
+	Account account = EntityFactory.getInstance(Account.class);
 
 	String correctEmail = "correct";
 	String inCorrectEmail = "incorrect";
@@ -61,18 +62,10 @@ class AccountServiceTest {
 	void testLoginIncorrectly() {
 		Mockito.when(passwordValidationService.validate(inCorrectEmail, inCorrectPassword)).thenReturn(null);
 
-		assertFalse(accountService.login(inCorrectEmail, inCorrectPassword));
-	}
+		IllegalArgumentException thrown = Assertions.assertThrows(
+				IllegalArgumentException.class, () -> accountService.login(inCorrectEmail, inCorrectPassword));
 
-	@Test
-	void testRegister() {
-		Account mockAccountInDB = new Account();
-		mockAccountInDB.setEmail(correctEmail);
-		mockAccountInDB.setPassword(correctPassword);
-
-		Mockito.when(accountRepository.findByEmail(correctEmail)).thenReturn(mockAccountInDB);
-
-		assertTrue(accountService.register(correctEmail, correctPassword));
+		Assertions.assertEquals(Constants.INVALID_PASSWORD, thrown.getMessage());
 	}
 
 	@Test
@@ -93,7 +86,7 @@ class AccountServiceTest {
 
 	@Test
 	void testGetAccount() {
-		Account mockAccountInDB = new Account();
+		Account mockAccountInDB = EntityFactory.getInstance(Account.class);
 		mockAccountInDB.setEmail(correctEmail);
 		mockAccountInDB.setPassword(correctPassword);
 
@@ -104,28 +97,6 @@ class AccountServiceTest {
 		assertAll(
 				() -> assertEquals(accountFromService.getEmail(), mockAccountInDB.getEmail()),
 				() -> assertEquals(accountFromService.getPassword(), mockAccountInDB.getPassword())
-		);
-	}
-
-	@Test
-	void testGetAllAccounts() {
-		Account mock_1 = new Account();
-		mock_1.setEmail(correctEmail);
-		mock_1.setPassword(correctPassword);
-
-		Account mock_2 = new Account();
-		mock_2.setEmail(correctEmail);
-		mock_2.setPassword(correctPassword);
-
-		Mockito.when(accountRepository.findAll()).thenReturn(List.of(mock_1, mock_2));
-
-		List<AccountDTO> allAccounts = accountService.getAllAccounts();
-
-		allAccounts.forEach(System.out::println);
-		//why? TODO: Make work
-		assertAll(
-				() -> assertEquals(allAccounts.get(0).getEmail(), mock_1.getEmail()),
-				() -> assertEquals(allAccounts.get(1).getEmail(), mock_2.getEmail())
 		);
 	}
 

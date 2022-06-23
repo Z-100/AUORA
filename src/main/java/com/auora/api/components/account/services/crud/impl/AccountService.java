@@ -10,11 +10,14 @@ import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
+import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @Component
 @AllArgsConstructor
@@ -45,7 +48,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 			throw new IllegalArgumentException(Constants.ALREADY_EXISTS);
 		}
 
-		Account account = new Account();
+		Account account = EntityFactory.getInstance(Account.class);
 		account.setEmail(email);
 		account.setPassword(password);
 
@@ -67,7 +70,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 	@Override
 	public List<AccountDTO> getAllAccounts() {
 
-		List<AccountDTO> accountDTOs = new ArrayList<>();
+		List<AccountDTO> accountDTOs =  EntityFactory.getListInstance(AccountDTO.class);
 		List<Account> accounts = accountRepository.findAll();
 
 		Validator.notEmpty(accounts, new String[]{ Constants.SOMETHING_WRONG, Constants.NOT_EXISTS });
@@ -95,6 +98,12 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 		Account account = passwordValidation.validate(email, password);
 
 		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.INVALID_PASSWORD });
+
+		Account possiblyExistingAccount = accountRepository.findByEmail(newEmail);
+
+		if (possiblyExistingAccount != null) {
+			throw new IllegalArgumentException(Constants.ALREADY_EXISTS);
+		}
 
 		account.setEmail(newEmail);
 		account.setPassword(newPassword);

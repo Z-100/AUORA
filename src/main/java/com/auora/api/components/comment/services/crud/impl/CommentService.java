@@ -12,11 +12,13 @@ import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.other.Constants;
 import com.auora.api.other.Validator;
 import com.auora.api.service.IPasswordValidationService;
+import com.auora.api.service.impl.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -121,12 +123,20 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public Boolean delete(String email, String password, String commentId) {
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
 		Validator.notNull(commentId);
-
 		Long id = Long.parseLong(commentId);
 
-		// ? GTK Deleting an entity, will delete all fk to that entity
+		Account validate = passwordValidation.validate(email, password);
+		Validator.notNull(validate, Constants.INVALID_PASSWORD);
+
+		Optional<Comment> byId = commentRepository.findById(id);
+
+		if (byId.isEmpty()) {
+			throw new IllegalArgumentException(Constants.NOT_EXISTS);
+		}
+
+		Validator.equals(validate.getId(), byId.get().getFkAccountId().getId(), Constants.INVALID_PASSWORD);
+
 		commentRepository.deleteById(id);
 
 		return commentRepository.findById(id).isEmpty();
@@ -137,7 +147,7 @@ public class CommentService implements ICommentService {
 		Validator.notNull(title.length() > 0 ? title : null, Constants.TITLE_NOT_NULL);
 		Validator.notNull(description.length() > 0 ? description : null, Constants.TITLE_NOT_NULL);
 
-		Comment comment = new Comment();
+		Comment comment = EntityFactory.getInstance(Comment.class);
 		comment.setTitle(title);
 		comment.setDescription(description);
 		comment.setFkAccountId(accountService.getAccount(email));
