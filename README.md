@@ -23,6 +23,20 @@ is expandable and easy to use:
 
 ##Documentation
 
+
+### How I worked myself through the project
+
+The whole project started off as an idea. I wanted to create another Spring Boot RESTful API-project.
+The idea sounded great, as I was able to greatly improve my SpringBoot skills once again.
+
+After the idea, and the initial [description](#description) I continued with the design of the  whole application:
+1. I created a [use case model](#use-case-model), which was then used further into the project to determine, which classes, ... were needed.
+2. After that, I moved to the [use case specification](#use-case-specification), to further improve the project by specifying all the cases.
+3. From the [use case specification](#use-case-specification), I've created the [domain model](#domain-model). This helped me a lot, later on in the design phase.
+4. After the design, I started the planning, by creating a set of [CRC cards](#crc-cards), which helped me complete my understanding of the relationships
+5. And last but not least, I created a very useful [class diagram](#class-diagram), which was fairly easy to do, as I already have created a [domain model](#domain-model) and some [CRC cards](#crc-cards).
+
+
 ### The things, which changed
 
 #### The updated class diagram
@@ -63,7 +77,34 @@ Not many functionalities have changed in the frontend. What I forgot in planning
 
 ### The test cases
 
-### How I worked myself through the project
+
+### The design phase
+
+#### Use Case Model
+
+![usecase-before](https://github.com/Z-100/AUORA/tree/master/other/usecase/before.png)
+![usecase-after](https://github.com/Z-100/AUORA/tree/master/other/usecase/after.png)
+
+#### Use Case Specification
+
+![usecase-spec-before](https://github.com/Z-100/AUORA/tree/master/other/usecase/usecase_spec.png)
+![usecase-spec-after](https://github.com/Z-100/AUORA/tree/master/other/usecase/usecase_spec_after.png)
+
+#### Domain Model
+
+![domain-before](https://github.com/Z-100/AUORA/tree/master/other/domain/before.png)
+![domain-after](https://github.com/Z-100/AUORA/tree/master/other/domain/before.png)
+
+#### CRC Cards
+
+[crc-before](https://github.com/Z-100/AUORA/tree/master/other/domain/cards.json)
+[crc-after](https://github.com/Z-100/AUORA/tree/master/other/domain/cards_after.json)
+
+#### Class Diagram
+
+[crc-before](https://github.com/Z-100/AUORA/tree/master/other/class/before.png)
+[crc-after](https://github.com/Z-100/AUORA/tree/master/other/class/after.png)
+
 
 ## Requirements
 
