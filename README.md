@@ -87,10 +87,10 @@ As I've added some more functionality to the application, the usecase of course 
 after picture.
 
 ##### Use case model after planning
-![usecase-before](https://github.com/Z-100/AUORA/tree/blob/other/usecase/usecase_before.png)
+![usecase-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_before.png)
 
 ##### Use case model after implementation
-![usecase-after](https://github.com/Z-100/AUORA/tree/blob/other/usecase/usecase_after.png)
+![usecase-after](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_after.png)
 
 
 #### Use Case Specification
@@ -104,10 +104,10 @@ In the updated version of the usecase specification I've simply created the miss
 of the "normal" usecase diagram.
 
 ##### Usecase specification after planning
-![usecase-spec-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_before.png)
+[usecase-spec-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_before.md)
 
 ##### Usecase specification after planning
-![usecase-spec-after](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_after.png)
+[usecase-spec-after](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_after.md)
 
  #### Domain Model
 
@@ -116,17 +116,17 @@ The domain model was a great way to plan ahead, as, even tho, this application i
 The advantages of such a domain model were, that I could already plan out the layout I wanted to implement, without 
 having to struggle out all the properties and methods I'd eventually need for the API to work securely and correctly.
 
-I stared off, by separating the application into four different sections: One for each entity, as this is the REST-ful
+I started off, by separating the application into four different sections: One for each entity, as this is the REST-ful
 way of creating an application.
 After that, I pretty much just had to work out one of these structures, which I then repeated three more times, to have
 the entire application implemented.
 Then, I've drawn some more liens, which would later on be constraints between the entities, and I was done.
 
 ##### Domain model after planning
-![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
+![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/domain_before.png)
 
 ##### Domain model after implementation
-![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/after.png)
+![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/domain_after.png)
 
 
 #### CRC Cards
@@ -140,10 +140,10 @@ The cards were updated accordingly to the domain-, as well as the class diagram,
 and functionalities.
 
 ##### CRC-cards after planning
-[crc-before](https://github.com/Z-100/AUORA/blob/master/other/domain/cards.json)
+[crc-before](https://github.com/Z-100/AUORA/blob/master/other/crc/cards_before.json)
 
 ##### CRC-cards after implementation
-[crc-after](https://github.com/Z-100/AUORA/blob/master/other/domain/cards_after.json)
+[crc-after](https://github.com/Z-100/AUORA/blob/master/other/crc/cards_after.json)
 
 
 #### Class Diagram
