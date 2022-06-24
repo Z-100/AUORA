@@ -13,6 +13,8 @@ public interface IAccountRepository extends CrudRepository<Account, Long> {
 
 	Account findByEmailAndPassword(String email, String password);
 
+	Account findByEmailAndValidationSentence(String email, String validationSentence);
+
 	List<Account> findAll();
 
 	void deleteById(Long id);

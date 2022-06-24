@@ -13,7 +13,7 @@ public abstract class AAccountMapper {
 
 	abstract public AccountDTO toDTO(Account entity);
 
-	@Mapping(target = "token", ignore = true)
+	@Mapping(target = "validationSentence", ignore = true)
 	@Mapping(target = "password", ignore = true)
 	abstract public Account toEntity(AccountDTO dto);
 }

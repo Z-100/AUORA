@@ -1,7 +1,5 @@
 package com.auora.api.service;
 
-import com.auora.api.service.impl.EntityFactory;
-
 import java.util.Collection;
 
 public class Validator<T> {
