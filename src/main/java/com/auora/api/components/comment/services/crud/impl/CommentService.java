@@ -11,8 +11,8 @@ import com.auora.api.components.question.entity.Question;
 import com.auora.api.components.thread.entity.Thread;
 import com.auora.api.other.Constants;
 import com.auora.api.service.Validator;
-import com.auora.api.service.IPasswordValidationService;
-import com.auora.api.service.impl.EntityFactory;
+import com.auora.api.service.IAccountValidationService;
+import com.auora.api.service.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ public class CommentService implements ICommentService {
 	private final ICommentRepository commentRepository;
 
 	private final ACommentMapper commentMapper;
-	private final IPasswordValidationService passwordValidation;
+	private final IAccountValidationService passwordValidation;
 
 	private final AccountService accountService;
 
@@ -126,7 +126,7 @@ public class CommentService implements ICommentService {
 		Validator.notNull(commentId);
 		Long id = Long.parseLong(commentId);
 
-		Account validate = passwordValidation.validate(email, password);
+		Account validate = passwordValidation.validateLogin(email, password);
 		Validator.notNull(validate, Constants.INVALID_PASSWORD);
 
 		Optional<Comment> byId = commentRepository.findById(id);
@@ -166,7 +166,7 @@ public class CommentService implements ICommentService {
 	}
 
 	private Comment getComment(String email, String password, String commentId) {
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(passwordValidation.validateLogin(email, password), Constants.INVALID_PASSWORD);
 		Validator.notNull(commentId);
 
 		Long id = Long.parseLong(commentId);

@@ -10,8 +10,8 @@ import com.auora.api.components.question.services.crud.IQuestionService;
 import com.auora.api.components.question.services.mapper.AQuestionMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.service.Validator;
-import com.auora.api.service.IPasswordValidationService;
-import com.auora.api.service.impl.EntityFactory;
+import com.auora.api.service.IAccountValidationService;
+import com.auora.api.service.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,7 @@ public class QuestionService implements IQuestionService {
 	private final IQuestionRepository questionRepository;
 
 	private final AQuestionMapper questionMapper;
-	private final IPasswordValidationService passwordValidation;
+	private final IAccountValidationService passwordValidation;
 
 	private final AccountService accountService;
 	private final CommentService commentService;
@@ -54,7 +54,7 @@ public class QuestionService implements IQuestionService {
 		Validator.notNull(title.length() > 0 ? title : null, Constants.TITLE_NOT_NULL);
 		Validator.notNull(description.length() > 0 ? description : null, Constants.TITLE_NOT_NULL);
 
-		Account account = passwordValidation.validate(email, password);
+		Account account = passwordValidation.validateLogin(email, password);
 
 		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
@@ -126,7 +126,7 @@ public class QuestionService implements IQuestionService {
 		Validator.notNull(questionId);
 		Long id = Long.parseLong(questionId);
 
-		Account validate = passwordValidation.validate(email, password);
+		Account validate = passwordValidation.validateLogin(email, password);
 		Validator.notNull(validate, Constants.INVALID_PASSWORD);
 
 		Optional<Question> byId = questionRepository.findById(id);
@@ -145,7 +145,7 @@ public class QuestionService implements IQuestionService {
 
 	public Question getQuestion(String email, String password, String questionId) {
 
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(passwordValidation.validateLogin(email, password), Constants.INVALID_PASSWORD);
 		Validator.notNull(questionId);
 
 		Long id = Long.parseLong(questionId);

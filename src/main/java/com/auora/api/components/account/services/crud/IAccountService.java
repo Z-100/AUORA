@@ -14,4 +14,6 @@ public interface IAccountService {
 	Boolean update(String email, String password, String newEmail, String newPassword);
 
 	Boolean delete(String email, String password);
+
+	Boolean forgottenPassword(String email, String newPassword, String validationSentence);
 }

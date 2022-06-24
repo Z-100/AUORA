@@ -9,8 +9,8 @@ import com.auora.api.components.account.services.crud.IRegisterService;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
 import com.auora.api.service.Validator;
-import com.auora.api.service.IPasswordValidationService;
-import com.auora.api.service.impl.EntityFactory;
+import com.auora.api.service.IAccountValidationService;
+import com.auora.api.service.EntityFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +22,12 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	private final IAccountRepository accountRepository;
 
-	private final IPasswordValidationService passwordValidation;
+	private final IAccountValidationService passwordValidation;
 	private final AAccountMapper accountMapper;
 
 	@Override
 	public Boolean login(String email, String password) {
-		Account account = passwordValidation.validate(email, password);
+		Account account = passwordValidation.validateLogin(email, password);
 
 		Validator.notNull(account, Constants.INVALID_PASSWORD);
 
@@ -35,9 +35,10 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 	}
 
 	@Override
-	public Boolean register(String email, String password) {
+	public Boolean register(String email, String password, String validationSentence) {
 		Validator.notNull(email, Constants.EMAIL_NOT_NULL);
 		Validator.notNull(password, Constants.PASSWORD_NOT_NULL);
+		Validator.notNull(validationSentence, Constants.VALIDATION_SENTENCE_NOT_NULL);
 
 		Account possiblyExistingAccount = accountRepository.findByEmail(email);
 
@@ -48,13 +49,15 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 		Account account = EntityFactory.getInstance(Account.class);
 		account.setEmail(email);
 		account.setPassword(password);
+		account.setValidationSentence(validationSentence);
 
 		accountRepository.save(account);
 
 		Account savedAccount = accountRepository.findByEmail(email);
 
 		return savedAccount.getEmail().equals(email)
-				&& savedAccount.getPassword().equals(password);
+				&& savedAccount.getPassword().equals(password)
+				&& savedAccount.getValidationSentence().equals(validationSentence);
 	}
 
 	@Override
@@ -92,7 +95,7 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 		Validator.notNull(newEmail);
 		Validator.notNull(newPassword);
 
-		Account account = passwordValidation.validate(email, password);
+		Account account = passwordValidation.validateLogin(email, password);
 
 		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.INVALID_PASSWORD });
 
@@ -117,10 +120,26 @@ public class AccountService implements IAccountService, IRegisterService, ILogin
 
 	@Override
 	public Boolean delete(String email, String password) {
-		Validator.notNull(passwordValidation.validate(email, password), Constants.INVALID_PASSWORD);
+		Validator.notNull(passwordValidation.validateLogin(email, password), Constants.INVALID_PASSWORD);
 
 		accountRepository.delete(accountRepository.findByEmailAndPassword(email, password));
 
 		return accountRepository.findByEmail(email) == null;
+	}
+
+	@Override
+	public Boolean forgottenPassword(String email, String newPassword, String validationSentence) {
+		Validator.notNull(email);
+		Validator.notNull(newPassword);
+		Validator.notNull(validationSentence);
+
+		Account account = passwordValidation.validateSentence(email, validationSentence);
+
+		Validator.notNull(account, new String[]{ Constants.SOMETHING_WRONG, Constants.INVALID_SENTENCE });
+
+		account.setPassword(newPassword);
+		accountRepository.save(account);
+
+		return accountRepository.findByEmail(email).getPassword().equals(newPassword);
 	}
 }

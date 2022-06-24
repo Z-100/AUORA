@@ -31,9 +31,10 @@ public class AccountController {
 	@PostMapping(Constants.URL_REGISTER)
 	public ResponseEntity<?> register(
 			@RequestHeader("email") final String email,
-			@RequestHeader("password") final String password) {
+			@RequestHeader("password") final String password,
+			@RequestHeader("validation-sentence") final String validationSentence) {
 
-		return accountService.register(email, password) ?
+		return accountService.register(email, password, validationSentence) ?
 				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
 				new ResponseEntity<>(Constants.SOMETHING_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -67,6 +68,17 @@ public class AccountController {
 			@RequestHeader("new-password") String newPassword) {
 
 		return accountService.update(email, password, newEmail, newPassword) ?
+				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
+				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@PostMapping(Constants.URL_PW_FORGOTTEN)
+	public ResponseEntity<?> forgottenPassword(
+			@RequestHeader("email") final String email,
+			@RequestHeader("new-password") final String newPassword,
+			@RequestHeader("validation-sentence") final String validationSentence) {
+
+		return accountService.forgottenPassword(email, newPassword, validationSentence) ?
 				new ResponseEntity<>(new JsonString(Constants.SUCCESS), HttpStatus.OK) :
 				new ResponseEntity<>(Constants.INVALID_PASSWORD, HttpStatus.INTERNAL_SERVER_ERROR);
 	}

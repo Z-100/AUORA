@@ -28,8 +28,8 @@ public class Account {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "token")
-	private String token;
+	@Column(name = "validationsentence")
+	private String validationSentence;
 
 	@OneToMany(cascade = {CascadeType.ALL},
 			orphanRemoval = true,

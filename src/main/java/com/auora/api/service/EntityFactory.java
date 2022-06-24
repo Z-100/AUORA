@@ -1,4 +1,4 @@
-package com.auora.api.service.impl;
+package com.auora.api.service;
 
 import java.util.ArrayList;
 import java.util.Collection;

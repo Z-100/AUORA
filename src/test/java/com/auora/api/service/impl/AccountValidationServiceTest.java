@@ -3,7 +3,7 @@ package com.auora.api.service.impl;
 import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.other.Constants;
-import com.auora.api.service.PasswordValidationService;
+import com.auora.api.service.EntityFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ExtendWith(MockitoExtension.class)
-class PasswordValidationServiceTest {
+class AccountValidationServiceTest {
 
 	@Mock
 	IAccountRepository accountRepository;
 
 	@InjectMocks
-	PasswordValidationService passwordValidation;
+	AccountValidationService passwordValidation;
 
 	Account mockAccount;
 
@@ -42,7 +42,7 @@ class PasswordValidationServiceTest {
 
 		setUpMockAccount();
 
-		Account validatedAccount = passwordValidation.validate("email", "password");
+		Account validatedAccount = passwordValidation.validateLogin("email", "password");
 
 		assertEquals(mockAccount.getEmail(), validatedAccount.getEmail());
 		assertEquals(mockAccount.getPassword(), validatedAccount.getPassword());
@@ -51,7 +51,7 @@ class PasswordValidationServiceTest {
 	@Test
 	void testEmailIsNull() {
 		IllegalArgumentException thrown = Assertions.assertThrows(
-				IllegalArgumentException.class, () -> passwordValidation.validate(null, "sas"));
+				IllegalArgumentException.class, () -> passwordValidation.validateLogin(null, "sas"));
 
 		Assertions.assertEquals(Constants.EMAIL_NOT_NULL, thrown.getMessage());
 	}
@@ -59,7 +59,7 @@ class PasswordValidationServiceTest {
 	@Test
 	void testPasswordIsNull() {
 		IllegalArgumentException thrown = Assertions.assertThrows(
-				IllegalArgumentException.class, () -> passwordValidation.validate("sas", null));
+				IllegalArgumentException.class, () -> passwordValidation.validateLogin("sas", null));
 
 		Assertions.assertEquals(Constants.PASSWORD_NOT_NULL, thrown.getMessage());
 	}
@@ -67,7 +67,7 @@ class PasswordValidationServiceTest {
 	@Test
 	void testParamsAreNull() {
 		IllegalArgumentException thrown = Assertions.assertThrows(
-				IllegalArgumentException.class, () -> passwordValidation.validate(null, null));
+				IllegalArgumentException.class, () -> passwordValidation.validateLogin(null, null));
 
 		Assertions.assertEquals(Constants.EMAIL_NOT_NULL, thrown.getMessage());
 	}

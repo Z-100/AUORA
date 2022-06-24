@@ -4,8 +4,8 @@ import com.auora.api.components.account.entity.Account;
 import com.auora.api.components.account.repository.IAccountRepository;
 import com.auora.api.components.account.services.mapper.AAccountMapper;
 import com.auora.api.other.Constants;
-import com.auora.api.service.impl.EntityFactory;
-import com.auora.api.service.PasswordValidationService;
+import com.auora.api.service.EntityFactory;
+import com.auora.api.service.impl.AccountValidationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class AccountServiceTest {
 	private IAccountRepository accountRepository;
 
 	@Mock
-	private PasswordValidationService passwordValidationService;
+	private AccountValidationService accountValidationService;
 
 	@Mock
 	private AAccountMapper accountMapper;
@@ -50,14 +50,14 @@ class AccountServiceTest {
 
 	@Test
 	void testLoginCorrectly() {
-		Mockito.when(passwordValidationService.validate(correctEmail, correctPassword)).thenReturn(account);
+		Mockito.when(accountValidationService.validateLogin(correctEmail, correctPassword)).thenReturn(account);
 
 		assertTrue(accountService.login(correctEmail, correctPassword));
 	}
 
 	@Test
 	void testLoginIncorrectly() {
-		Mockito.when(passwordValidationService.validate(inCorrectEmail, inCorrectPassword)).thenReturn(null);
+		Mockito.when(accountValidationService.validateLogin(inCorrectEmail, inCorrectPassword)).thenReturn(null);
 
 		IllegalArgumentException thrown = Assertions.assertThrows(
 				IllegalArgumentException.class, () -> accountService.login(inCorrectEmail, inCorrectPassword));
@@ -68,7 +68,7 @@ class AccountServiceTest {
 	@Test
 	void testRegisterEmailIsNull() {
 		IllegalArgumentException thrown = Assertions.assertThrows(
-				IllegalArgumentException.class, () -> accountService.register(null, "sas"));
+				IllegalArgumentException.class, () -> accountService.register(null, "sas", "sos"));
 
 		Assertions.assertEquals(Constants.EMAIL_NOT_NULL, thrown.getMessage());
 	}
@@ -76,9 +76,17 @@ class AccountServiceTest {
 	@Test
 	void testRegisterPasswordIsNull() {
 		IllegalArgumentException thrown = Assertions.assertThrows(
-				IllegalArgumentException.class, () -> accountService.register("sas", null));
+				IllegalArgumentException.class, () -> accountService.register("sas", null, "ses"));
 
 		Assertions.assertEquals(Constants.PASSWORD_NOT_NULL, thrown.getMessage());
+	}
+
+	@Test
+	void testRegisterValSentenceIsNull() {
+		IllegalArgumentException thrown = Assertions.assertThrows(
+				IllegalArgumentException.class, () -> accountService.register("sas", "ses", null));
+
+		Assertions.assertEquals(Constants.VALIDATION_SENTENCE_NOT_NULL, thrown.getMessage());
 	}
 
 	@Test
