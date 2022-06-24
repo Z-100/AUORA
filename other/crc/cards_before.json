@@ -1,0 +1,349 @@
+[
+  {
+    "name": "AccountController",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle communication in between back- and front end",
+      "Receive and Respond to client"
+    ],
+    "collaborators": [
+      "LoginService",
+      "RegisterService"
+    ]
+  },
+  {
+    "name": "LoginService",
+    "superclasses": "AccountController",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle login requests from the API"
+    ],
+    "collaborators": [
+      "AccountController",
+      "Account",
+      "AccountMapper",
+      "Account Repository"
+    ]
+  },
+  {
+    "name": "RegisterService",
+    "superclasses": "AccountController",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Registers a user to the database"
+    ],
+    "collaborators": [
+      "AccountController",
+      "AccountMapper",
+      "AccountRepository",
+      "Account"
+    ]
+  },
+  {
+    "name": "AccountRepository",
+    "superclasses": "CrudRepository",
+    "subclasses": "Account",
+    "type": 3,
+    "responsibilities": [
+      "Handle communication in between database <=> services"
+    ],
+    "collaborators": [
+      "LoginService",
+      "RegisterService"
+    ]
+  },
+  {
+    "name": "AccountMapper",
+    "superclasses": "AccountController",
+    "subclasses": "",
+    "type": 3,
+    "responsibilities": [
+      "Map an account entity to an account DTO",
+      "Map an account DTO to an account entity"
+    ],
+    "collaborators": [
+      "RegisterService",
+      "LoginService",
+      "Account",
+      "AccountDTO"
+    ]
+  },
+  {
+    "name": "Account",
+    "superclasses": "",
+    "subclasses": "Question, Comment, Thread",
+    "type": 1,
+    "responsibilities": [
+      "Representation of entity in database",
+      "Saves information of an account"
+    ],
+    "collaborators": [
+      "AccountMapper",
+      "AccountRepository"
+    ]
+  },
+  {
+    "name": "AccountDTO",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Saves (publicly available) information of an account"
+    ],
+    "collaborators": [
+      "AccountMapper"
+    ]
+  },
+  {
+    "name": "QuestionController",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle communication in between back- and front end",
+      "Receive and Respond to client"
+    ],
+    "collaborators": [
+      "QuestionService"
+    ]
+  },
+  {
+    "name": "QuestionService",
+    "superclasses": "QuestionController",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle requests from the API"
+    ],
+    "collaborators": [
+      "QuestionController",
+      "QuestionMapper",
+      "QuestionRepository"
+    ]
+  },
+  {
+    "name": "QuestionRepository",
+    "superclasses": "CrudRepository",
+    "subclasses": "Question",
+    "type": 3,
+    "responsibilities": [
+      "Handle communication in between database <=> services"
+    ],
+    "collaborators": [
+      "QuestionService",
+      "Question"
+    ]
+  },
+  {
+    "name": "QuestionMapper",
+    "superclasses": "QuestionController",
+    "subclasses": "",
+    "type": 3,
+    "responsibilities": [
+      "Map an Question entity to an Question DTO",
+      "Map an Question DTO to an Question entity"
+    ],
+    "collaborators": [
+      "QuestionService",
+      "Question",
+      "QuestionDTO"
+    ]
+  },
+  {
+    "name": "Question",
+    "superclasses": "",
+    "subclasses": "Comment",
+    "type": 1,
+    "responsibilities": [
+      "Representation of entity in database",
+      "Saves information of an account"
+    ],
+    "collaborators": [
+      "AccountMapper",
+      "AccountRepository",
+      "Account"
+    ]
+  },
+  {
+    "name": "QuestionDTO",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Saves (publicly available) information of a question"
+    ],
+    "collaborators": [
+      "QuestionMapper"
+    ]
+  },
+  {
+    "name": "CommentController",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle communication in between back- and front end",
+      "Receive and Respond to client"
+    ],
+    "collaborators": [
+      "CommentService"
+    ]
+  },
+  {
+    "name": "CommentService",
+    "superclasses": "CommentController",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle requests from the API"
+    ],
+    "collaborators": [
+      "CommentController",
+      "CommentMapper",
+      "CommentRepository"
+    ]
+  },
+  {
+    "name": "CommentRepository",
+    "superclasses": "CrudRepository",
+    "subclasses": "Comment",
+    "type": 3,
+    "responsibilities": [
+      "Handle communication in between database <=> services"
+    ],
+    "collaborators": [
+      "CommentService",
+      "Comment"
+    ]
+  },
+  {
+    "name": "CommentMapper",
+    "superclasses": "CommentController",
+    "subclasses": "",
+    "type": 3,
+    "responsibilities": [
+      "Map an Comment entity to an Comment DTO",
+      "Map an Comment DTO to an Comment entity"
+    ],
+    "collaborators": [
+      "CommentService",
+      "Comment",
+      "CommentDTO"
+    ]
+  },
+  {
+    "name": "Comment",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Representation of entity in database",
+      "Saves information of an account"
+    ],
+    "collaborators": [
+      "CommentMapper",
+      "CommentRepository",
+      "Account",
+      "Question",
+      "Thread"
+    ]
+  },
+  {
+    "name": "CommentDTO",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Saves (publicly available) information of a Comment"
+    ],
+    "collaborators": [
+      "CommentMapper"
+    ]
+  },
+  {
+    "name": "ThreadController",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle communication in between back- and front end",
+      "Receive and Respond to client"
+    ],
+    "collaborators": [
+      "ThreadService"
+    ]
+  },
+  {
+    "name": "ThreadService",
+    "superclasses": "ThreadController",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Handle requests from the API"
+    ],
+    "collaborators": [
+      "ThreadController",
+      "ThreadMapper",
+      "ThreadRepository"
+    ]
+  },
+  {
+    "name": "ThreadRepository",
+    "superclasses": "CrudRepository",
+    "subclasses": "Thread",
+    "type": 3,
+    "responsibilities": [
+      "Handle communication in between database <=> services"
+    ],
+    "collaborators": [
+      "ThreadService",
+      "Thread"
+    ]
+  },
+  {
+    "name": "ThreadMapper",
+    "superclasses": "ThreadController",
+    "subclasses": "",
+    "type": 3,
+    "responsibilities": [
+      "Map an Thread entity to an Thread DTO",
+      "Map an Thread DTO to an Thread entity"
+    ],
+    "collaborators": [
+      "ThreadService",
+      "Thread",
+      "ThreadDTO"
+    ]
+  },
+  {
+    "name": "Thread",
+    "superclasses": "",
+    "subclasses": "Comment",
+    "type": 1,
+    "responsibilities": [
+      "Representation of entity in database",
+      "Saves information of an account"
+    ],
+    "collaborators": [
+      "ThreadMapper",
+      "ThreadRepository",
+      "Account"
+    ]
+  },
+  {
+    "name": "ThreadDTO",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Saves (publicly available) information of a Thread"
+    ],
+    "collaborators": [
+      "ThreadMapper"
+    ]
+  }
+]

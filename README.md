@@ -21,6 +21,7 @@ is expandable and easy to use:
     * Store once, use many times
 * To add more features like topics or categories, just add more entities.
 
+
 ##Documentation
 
 
@@ -39,21 +40,14 @@ After the idea, and the initial [description](#description) I continued with the
 
 ### The things, which changed
 
-#### The updated class diagram
+Quite a low amount of stuff changed in the backend. But the classes and dependencies which did are either completely new
+classes or just slightly updated dependencies, as things weren't working out as planned.
 
-Quite a low amount of stuff changed in the backend. But the classes and dependencies which did are listed here:
-* EntityFactory.java
-* ...
+Also, not one functionality has been left out of the release, since planning.
+However, what did change, are newly implemented features which have not been planned.
 
-![New class diagram](https://github.com/z-100/auora/tree/master/other/class/updated.png)
+A more specific explanation on why the stuff, which changed, did change can be found in the [design phase section](#the-design-phase)
 
-#### The updated use case
-
-Not many functionalities have changed in the frontend. What I forgot in planning however, was security:
-* I implemented further password validation
-* ...
-
-![New usecase diagram](https://github.com/z-100/auora/tree/master/other/usecase/updated.png)
 
 ### What technologies were being used?
 
@@ -82,24 +76,73 @@ Not many functionalities have changed in the frontend. What I forgot in planning
 
 #### Use Case Model
 
-![usecase-before](https://github.com/Z-100/AUORA/tree/blob/other/usecase/before.png)
-![usecase-after](https://github.com/Z-100/AUORA/tree/blob/other/usecase/after.png)
+The usecase model is a great way to start off the planning of an application. I defined most of the cases, a user or,
+a developer should be able to access. ("Most of" means, that I later on in the design phase added one or the other).
+
+The actors "visitor" and "member" are hypothetical, as I didn't want to implement a frontend, but...
+With some checks, a visitor could e.g. never write a comment, as a use account is needed for that.
+This means I've even implemented that!
+
+As I've added some more functionality to the application, the usecase of course had to change too. This is shown in the
+after picture.
+
+##### Use case model after planning
+![usecase-before](https://github.com/Z-100/AUORA/tree/blob/other/usecase/usecase_before.png)
+
+##### Use case model after implementation
+![usecase-after](https://github.com/Z-100/AUORA/tree/blob/other/usecase/usecase_after.png)
+
 
 #### Use Case Specification
 
-![usecase-spec-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec.png)
+The usecase specification is, as the name suggests, a more specific and detailed version of the usecase diagram.
+
+In this more specific diagram I've created some useful cases, which describe each individual usecase exactly the way
+it's intended to be working.
+
+In the updated version of the usecase specification I've simply created the missing specifications of the updated version
+of the "normal" usecase diagram.
+
+##### Usecase specification after planning
+![usecase-spec-before](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_before.png)
+
+##### Usecase specification after planning
 ![usecase-spec-after](https://github.com/Z-100/AUORA/blob/master/other/usecase/usecase_spec_after.png)
 
-#### Domain Model
+ #### Domain Model
 
+The domain model was a great way to plan ahead, as, even tho, this application isn't particularly huge, it still is a _bigger_ project.
+
+The advantages of such a domain model were, that I could already plan out the layout I wanted to implement, without 
+having to struggle out all the properties and methods I'd eventually need for the API to work securely and correctly.
+
+I stared off, by separating the application into four different sections: One for each entity, as this is the REST-ful
+way of creating an application.
+After that, I pretty much just had to work out one of these structures, which I then repeated three more times, to have
+the entire application implemented.
+Then, I've drawn some more liens, which would later on be constraints between the entities, and I was done.
+
+##### Domain model after planning
 ![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
-![domain-after](https://github.com/Z-100/AUORA/blob/master/other/domain/before.png)
+
+##### Domain model after implementation
+![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/after.png)
+
 
 #### CRC Cards
 
-The crc cards have been there since the beginning.
+The crc cards have been there since the beginning. With the help of these mighty cards, it was easier to further
+understand, which class should have which dependency and/or functionality.
 
+The cards are fairly easy to create and were absolutely worth it, regarding the expense <-> result ratio.
+
+The cards were updated accordingly to the domain-, as well as the class diagram, due to changes in the dependencies
+and functionalities.
+
+##### CRC-cards after planning
 [crc-before](https://github.com/Z-100/AUORA/blob/master/other/domain/cards.json)
+
+##### CRC-cards after implementation
 [crc-after](https://github.com/Z-100/AUORA/blob/master/other/domain/cards_after.json)
 
 
@@ -118,7 +161,7 @@ Another example would be the entirety of the Validator & Factory. I did not inte
 ##### Class diagram after planning
 ![class-before](https://github.com/Z-100/AUORA/blob/master/other/class/before.png)
 
-##### Class diagram after implementing
+##### Class diagram after implementation
 ![class-after](https://github.com/Z-100/AUORA/blob/master/other/class/after.png)
 
 
@@ -139,4 +182,18 @@ Another example would be the entirety of the Validator & Factory. I did not inte
 
 | The requirement                                                            | Done |
 |:---------------------------------------------------------------------------|:----:|
-| Good code                                                                  |  🟢  |
+| Code is the same as the class diagram                                      |  🟢  |
+| Complex classes / methods commented                                        |  🟢  |
+| App works as defined in the use case                                       |  🟢  |
+| App surpasses it's own expectations                                        |  🟢  |
+| Coded with SOLID                                                           |  🟢  |
+| Code includes design patterns                                              |  🟢  |
+| Changes to the design are documented (New class & usecase diagrams         |  🟢  |
+
+### Documentation
+
+| The requirement                                                            | Done |
+|:---------------------------------------------------------------------------|:----:|
+| Includes test cases (Test use cases)                                       |  🟢  |
+| Includes the process and splitting of work                                 |  🟢  |
+| Repository explained                                                       |  🟢  |
