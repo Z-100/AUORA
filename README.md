@@ -11,7 +11,6 @@ questions and threads. <br/>
 And of course, the most important feature of any application, you can also up and/or down
 vote any question, thread or comment!
 
-
 Generally speaking it's the base of such a forum. In this repository you'll find anything 
 related to the [design phase](https://github.com/z-100/AUORA/tree/master/other) and
 [the code](https://github.com/z-100/AUORA). The entire project basically is a REST-API, which 
@@ -23,7 +22,6 @@ is expandable and easy to use:
 
 
 ##Documentation
-
 
 ### How I worked myself through the project
 
@@ -51,12 +49,16 @@ A more specific explanation on why the stuff, which changed, did change can be f
 
 ### What technologies were being used?
 
-| The technology | What was it used for?                                                               | Where to find?                                                                                                                    |
-|:---------------|:------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------|
-| Java 17        | The entire project is written in Java                                               | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java)                                                             |
-| Spring Boot    | The API-layer of the application (including repositories, entities and controllers) | [com.auora.api.components.[...]](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)               |
-| MapStruct      | The mapping between the entities and DTOs of the project                            | [com.auora.api.components.[...].service.mapper](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)|
-| Lombok         | The getters & setters in the entities. The constructors in other components         | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                            |
+In this section you'll encounter a small list of all the technologies, with another list of all the patterns used 
+within this project. The "where to find" part of each table represents the location in the code, of where to find the
+just-mentioned component/technology/pattern.
+
+| The technology    | What was it used for?                                                               | Where to find?                                                                                                                                 |
+|:------------------|:------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
+| Java 17           | The entire project is written in Java                                               | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java)                                                                          |
+| Spring Boot       | The API-layer of the application (including repositories, entities and controllers) | [com.auora.api.components.[...]](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)                            |
+| MapStruct         | The mapping between the entities and DTOs of the project                            | [com.auora.api.components.[...].service.mapper](https://github.com/Z-100/AUORA/tree/master/src/main/java/com/auora/api/components)             |
+| Lombok            | The getters & setters in the entities. The constructors in other components         | [com.auora](https://github.com/Z-100/AUORA/tree/master/src/main/java/)                                                                         |
 
 | The pattern       | What it does in the project                                                         | Where to find?                                                                                                                                 |
 |:------------------|:------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
@@ -71,6 +73,81 @@ A more specific explanation on why the stuff, which changed, did change can be f
 
 ### The test cases
 
+Listed here, are the test cases. Even though I've implemented plenty of JUnit tests, I still wanted to have some actual 
+user tests, as it's hard to test the API, from the API. That's why I've decided to just create four simple OK/NOK
+test-cases, of which all test different access points to the API.
+
+The rest of the tests can be found [here](https://github.com/Z-100/AUORA/tree/master/src/test/java).
+
+| Tested component                          | Expected result                                 | Actual result                                      | Passed                   |
+|:------------------------------------------|:------------------------------------------------|:---------------------------------------------------|:-------------------------|
+| Component name and activity tested        | What should happen after doing something        | What actually happened after doing so              | :heavy_check_mark: or :x:|
+
+#### Account
+| Account requests                       | Expected result                                    | Actual result                                      | Passed             |
+|:---------------------------------------|:---------------------------------------------------|:---------------------------------------------------|:-------------------|
+| Correct login                          | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Incorrect login                        | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| E-Mail not exists register             | User receives a new account + success response     | User receives a new account + success response     | :heavy_check_mark: |
+| E-Mail already exists register         | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Get all accounts: Worked               | User receives a list of accounts                   | User receives a list of accounts                   | :heavy_check_mark: |
+| Get all accounts: Error in BE          | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Delete account: Correct info           | User receives a success response + account deleted | User receives a success response + account deleted | :heavy_check_mark: |
+| Delete account: Incorrect info         | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Update account: Correct info           | User receives a success response + account changed | User receives a success response + account changed | :heavy_check_mark: |
+| Update account: Incorrect info         | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Forgotten password: Correct sentence   | User receives a success response + new password    | User receives a success response + new password    | :heavy_check_mark: |
+| Forgotten password: Incorrect sentence | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+
+#### Question
+| Question requests                      | Expected result                                    | Actual result                                      | Passed             |
+|:---------------------------------------|:---------------------------------------------------|:---------------------------------------------------|:-------------------|
+| Get questions from acc: Worked         | User receives a list of questions                  | User receives a list of questions                  | :heavy_check_mark: |
+| Get questions from acc: Error in BE    | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add question: Correct info             | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add question: Incorrect info           | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add upvote: Correct info               | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add upvote: Incorrect info             | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add downvote: Correct info             | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add downvote: Incorrect info           | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add comment: Correct info              | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add comment: Incorrect info            | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Delete question: Correct info          | User receives a success response, question deleted | User receives a success response, question deleted | :heavy_check_mark: |
+| Delete question: Incorrect info        | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+
+#### Thread
+| Thread requests                        | Expected result                                    | Actual result                                      | Passed             |
+|:---------------------------------------|:---------------------------------------------------|:---------------------------------------------------|:-------------------|
+| Get threads from acc: Worked           | User receives a list of threads                    | User receives a list of threads                    | :heavy_check_mark: |
+| Get threads from acc: Error in BE      | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add thread: Correct info               | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add thread: Incorrect info             | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add upvote: Correct info               | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add upvote: Incorrect info             | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add downvote: Correct info             | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add downvote: Incorrect info           | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add comment: Correct info              | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add comment: Incorrect info            | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Delete thread: Correct info            | User receives a success response, thread deleted   | User receives a success response, thread deleted   | :heavy_check_mark: |
+| Delete thread: Incorrect info          | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+
+#### Comment
+| Comment requests                       | Expected result                                    | Actual result                                      | Passed             |
+|:---------------------------------------|:---------------------------------------------------|:---------------------------------------------------|:-------------------|
+| Get comments from acc: Worked          | User receives a list of comments                   | User receives a list of comments                   | :heavy_check_mark: |
+| Get comments from acc: Error           | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Get comments from question: Worked     | User receives a list of comments                   | User receives a list of Comments                   | :heavy_check_mark: |
+| Get comments from question: Error      | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Get comments from thread: Worked       | User receives a list of comments                   | User receives a list of comments                   | :heavy_check_mark: |
+| Get comments from thread: Error        | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add upvote: Correct info               | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add upvote: Incorrect info             | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add downvote: Correct info             | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add downvote: Incorrect info           | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Add comment: Correct info              | User receives a success response                   | User receives a success response                   | :heavy_check_mark: |
+| Add comment: Incorrect info            | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
+| Delete comment: Correct info           | User receives a success response, comment deleted  | User receives a success response, comment deleted  | :heavy_check_mark: |
+| Delete comment: Incorrect info         | User receives an error response                    | User receives an error response                    | :heavy_check_mark: |
 
 ### The design phase
 
