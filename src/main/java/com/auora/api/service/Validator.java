@@ -2,6 +2,12 @@ package com.auora.api.service;
 
 import java.util.Collection;
 
+ /**
+ * @author Z-100
+ * A generic solution for a null & empty checker with many choices as parameters.
+ *
+ * @param <T> A reference to the to-be-checked object
+ */
 public class Validator<T> {
 
 	public static <T> T notNull(final T t) {
