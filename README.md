@@ -21,7 +21,7 @@ is expandable and easy to use:
 * To add more features like topics or categories, just add more entities.
 
 
-##Documentation
+## Documentation
 
 ### How I worked myself through the project
 
@@ -202,9 +202,6 @@ Then, I've drawn some more liens, which would later on be constraints between th
 ##### Domain model after planning
 ![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/domain_before.png)
 
-##### Domain model after implementation
-![domain-before](https://github.com/Z-100/AUORA/blob/master/other/domain/domain_after.png)
-
 
 #### CRC Cards
 
@@ -218,9 +215,6 @@ and functionalities.
 
 ##### CRC-cards after planning
 [crc-before](https://github.com/Z-100/AUORA/blob/master/other/crc/cards_before.json)
-
-##### CRC-cards after implementation
-[crc-after](https://github.com/Z-100/AUORA/blob/master/other/crc/cards_after.json)
 
 
 #### Class Diagram
