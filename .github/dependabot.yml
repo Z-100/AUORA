@@ -1,8 +1,0 @@
-#ur mum
-
-version: 2
-updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
